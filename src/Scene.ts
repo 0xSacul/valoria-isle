@@ -1,19 +1,19 @@
-import { Clothing, DefaultNPC } from "./types";
+import { Clothing, DefaultNPC, TiffNPC } from "./types";
 import Phaser from "phaser";
 
 export default class ExternalScene extends window.BaseScene {
   constructor() {
     super({
-      name: "community_island",
+      name: "local",
       map: {
         tilesetUrl:
           "https://0xsacul.github.io/projectdignity-community-island/tileset.png",
-        //tilesetUrl: "http://localhost:5500/tileset.png",
+        //"http://localhost:5500/public/tileset.png",
       },
       player: {
         spawn: {
-          x: 256, // 256  824
-          y: 566, // 566  140
+          x: 760, // 256  824
+          y: 635, // 566  140
         },
       },
       mmo: {
@@ -33,6 +33,20 @@ export default class ExternalScene extends window.BaseScene {
       "world/small_3x5.xml"
     );
     this.load.bitmapFont("pixelmix", "world/7px.png", "world/7px.xml");
+    this.load.bitmapFont(
+      "Teeny Tiny Pixls",
+      "world/Teeny Tiny Pixls5.png",
+      "world/Teeny Tiny Pixls5.xml"
+    );
+
+    this.load.spritesheet(
+      "AnimatedSeal",
+      "https://0xsacul.github.io/projectdignity-community-island/seal_sprite.png",
+      {
+        frameWidth: 32,
+        frameHeight: 32,
+      }
+    );
   }
 
   create() {
@@ -40,28 +54,53 @@ export default class ExternalScene extends window.BaseScene {
 
     this.initialiseNPCs([
       {
-        x: 280,
-        y: 532.5,
+        x: 745,
+        y: 610,
         npc: "Tiff",
-        clothing: DefaultNPC,
+        clothing: TiffNPC,
         onClick: () => {
-          if (this.CheckPlayerDistance(280, 532.5)) return;
+          if (this.CheckPlayerDistance(745, 610)) return;
 
           window.openModal({
             npc: {
               name: "Tiff",
-              clothing: DefaultNPC,
+              clothing: TiffNPC,
             },
-            jsx: "Howdy farmer, welcome on Project Dignity's Island!",
+            jsx: "Howdy farmer, I'm Tiffanydys but you can call me Tiff, I'm the Co-Founder of Project Dignity. Feel free to check us out!",
+            buttons: [
+              {
+                id: "link",
+                text: "Visit Project Dignity",
+              },
+            ],
+            onButtonClick: (id: string) => {
+              console.log(id);
+              if (id === "link") {
+                window.open("https://dignity-games.com/", "_blank");
+              }
+            },
           });
         },
       },
     ]);
 
+    // Seal animation
+    const seal = this.add.sprite(825, 650, "AnimatedSeal");
+    this.anims.create({
+      key: "seal_anim",
+      frames: this.anims.generateFrameNumbers("AnimatedSeal", {
+        start: 0,
+        end: 19,
+      }),
+      frameRate: 10,
+      repeat: -1,
+    });
+    seal.play("seal_anim", true);
+
     // For local testing, allow Scene refresh with spacebar
     this.events.on("shutdown", () => {
-      this.cache.tilemap.remove("community_island");
-      this.scene.remove("community_island");
+      this.cache.tilemap.remove("local");
+      this.scene.remove("local");
     });
     const spaceBar = this.input.keyboard.addKey("SPACE");
     spaceBar.on("down", () => {

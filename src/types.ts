@@ -18,6 +18,15 @@ export const DefaultNPC: Clothing = {
   tool: "Pirate Scimitar",
 };
 
+export const TiffNPC: Clothing = {
+  body: "Beige Farmer Potion",
+  hat: "Sleeping Otter",
+  hair: "Blondie",
+  shirt: "Project Dignity Hoodie",
+  pants: "Farmer Pants",
+  tool: "Dawn Lamp",
+};
+
 declare global {
   interface Window {
     BaseScene: any;
