@@ -1,4 +1,5 @@
 import { Clothing, DefaultNPC, TiffNPC } from "./types";
+import { Label } from "./Components/Label";
 import Phaser from "phaser";
 
 export default class ExternalScene extends window.BaseScene {
@@ -47,11 +48,21 @@ export default class ExternalScene extends window.BaseScene {
         frameHeight: 32,
       }
     );
+
+    // load npcs
+    this.load.spritesheet(
+      "TiffNPC",
+      "http://localhost:5500/public/npc/Tiff.png",
+      {
+        frameWidth: 20,
+        frameHeight: 19,
+      }
+    );
   }
 
   create() {
     super.create();
-
+    /* 
     this.initialiseNPCs([
       {
         x: 745,
@@ -62,27 +73,63 @@ export default class ExternalScene extends window.BaseScene {
           if (this.CheckPlayerDistance(745, 610)) return;
 
           window.openModal({
-            npc: {
-              name: "Tiff",
-              clothing: TiffNPC,
-            },
-            jsx: "Howdy farmer, I'm Tiffanydys but you can call me Tiff, I'm the Co-Founder of Project Dignity. Feel free to check us out!",
-            buttons: [
+            type: "speaking",
+            messages: [
               {
-                id: "link",
-                text: "Visit Project Dignity",
+                text: "Howdy farmer, I'm Tiffanydys but you can call me Tiff, I'm the Co-Founder of Project Dignity. Feel free to check us out!",
+                actions: [
+                  {
+                    text: "Visit Project Dignity",
+                    cb: () => {
+                      window.open("https://dignity-games.com/", "_blank");
+                    },
+                  },
+                ],
               },
             ],
-            onButtonClick: (id: string) => {
-              console.log(id);
-              if (id === "link") {
-                window.open("https://dignity-games.com/", "_blank");
-              }
-            },
           });
         },
       },
-    ]);
+    ]); */
+
+    // place npcs
+    const tiff = this.add.sprite(745, 610, "TiffNPC");
+    this.anims.create({
+      key: "tiff_anim",
+      frames: this.anims.generateFrameNumbers("TiffNPC", {
+        start: 0,
+        end: 8,
+      }),
+      frameRate: 10,
+      repeat: -1,
+    });
+    tiff.play("tiff_anim", true);
+    // make tiff on top of label
+    tiff.setDepth(2);
+    tiff.setInteractive();
+    tiff.on("pointerdown", () => {
+      if (this.CheckPlayerDistance(745, 610)) return;
+      window.openModal({
+        type: "speaking",
+        messages: [
+          {
+            text: "Howdy farmer, I'm Tiffanydys but you can call me Tiff, I'm the Co-Founder of Project Dignity. Feel free to check us out!",
+            actions: [
+              {
+                text: "Visit Project Dignity",
+                cb: () => {
+                  window.open("https://dignity-games.com/", "_blank");
+                },
+              },
+            ],
+          },
+        ],
+      });
+    });
+    const label = new Label(this, "Tiff");
+    this.add.existing(label);
+    label.setPosition(tiff.x, tiff.y - 15);
+    label.setDepth(1);
 
     // Seal animation
     const seal = this.add.sprite(825, 650, "AnimatedSeal");
