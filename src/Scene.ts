@@ -19,8 +19,9 @@ export default class ExternalScene extends window.BaseScene {
       },
       mmo: {
         enabled: true,
-        //url: "ws://localhost:2567/",
-        //roomId: "local", // Need to be ingals_main once fixed on SFL side.
+        url: "wss://ingals.sacul.cloud",
+        roomId: "local", // Need to be ingals_main once fixed on SFL side.
+        serverId: "local",
       },
     });
   }
@@ -52,7 +53,7 @@ export default class ExternalScene extends window.BaseScene {
     // load npcs
     this.load.spritesheet(
       "TiffNPC",
-      "http://localhost:5500/public/npc/Tiff.png",
+      "https://0xsacul.github.io/projectdignity-community-island/npc/Tiff.png",
       {
         frameWidth: 20,
         frameHeight: 19,
