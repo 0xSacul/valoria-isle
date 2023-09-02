@@ -19,9 +19,9 @@ export default class ExternalScene extends window.BaseScene {
       },
       mmo: {
         enabled: true,
-        url: "wss://ingals.sacul.cloud",
-        roomId: "local", // Need to be ingals_main once fixed on SFL side.
-        serverId: "local",
+        url: "wss://plaza.sacul.cloud",
+        roomId: "project_dignity",
+        serverId: "project_dignity",
       },
     });
   }
@@ -146,14 +146,14 @@ export default class ExternalScene extends window.BaseScene {
     seal.play("seal_anim", true);
 
     // For local testing, allow Scene refresh with spacebar
-    this.events.on("shutdown", () => {
+    /* this.events.on("shutdown", () => {
       this.cache.tilemap.remove("local");
       this.scene.remove("local");
     });
     const spaceBar = this.input.keyboard.addKey("SPACE");
     spaceBar.on("down", () => {
       this.scene.start("default");
-    });
+    }); */
   }
 
   update() {
