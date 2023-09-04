@@ -1,4 +1,4 @@
-import { Clothing, DefaultNPC, TiffNPC } from "./types";
+import { Clothing, DefaultNPC, TiffNPC, CommunityModals } from "./types";
 import { Label } from "./Components/Label";
 import { CustomNPC, CustomNPCs } from "./npcs";
 import Phaser from "phaser";
@@ -79,7 +79,7 @@ export default class ExternalScene extends window.BaseScene {
       custom_npc.on("pointerdown", () => {
         if (this.CheckPlayerDistance(npc.x, npc.y)) return;
 
-        window.openModal(npc.modal);
+        window.openModal(npc.modal as CommunityModals);
       });
     }
 

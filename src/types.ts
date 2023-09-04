@@ -27,10 +27,43 @@ export const TiffNPC: Clothing = {
   tool: "Dawn Lamp",
 };
 
+type CommunityToasts = {
+  text: string;
+  item?: string;
+};
+
+export type CommunityModals = {
+  type: "speaking" | "loading";
+  messages: {
+    text: string;
+    actions?: { text: string; cb: () => void }[];
+  }[];
+};
+
+type CommunityAPICallRecord = Record<string, number>;
+
+interface CommunityAPICall {
+  metadata: string;
+  wearables?: CommunityAPICallRecord;
+  items?: CommunityAPICallRecord;
+}
+
+interface CommunityAPI {
+  mint: (mint: CommunityAPICall) => void;
+  burn: (burn: CommunityAPICall) => void;
+}
+
+interface CommunityAPIConstructor {
+  new (config: { id: string; apiKey: string }): CommunityAPI;
+}
+
 declare global {
   interface Window {
     BaseScene: any;
-    openModal: any;
+    createToast: (toast: CommunityToasts) => void;
+    openModal: (modal: CommunityModals) => void;
+    closeModal: () => void;
+    CommunityAPI: CommunityAPIConstructor;
     ExternalScene: typeof ExternalScene;
   }
 }
