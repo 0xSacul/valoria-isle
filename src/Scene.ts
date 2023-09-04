@@ -1,14 +1,16 @@
 import { Clothing, DefaultNPC, TiffNPC } from "./types";
 import { Label } from "./Components/Label";
+import { CustomNPCs } from "./npcs";
 import Phaser from "phaser";
+
+const REPO_URL = "https://0xsacul.github.io/projectdignity-community-island/";
 
 export default class ExternalScene extends window.BaseScene {
   constructor() {
     super({
       name: "local",
       map: {
-        tilesetUrl:
-          "https://0xsacul.github.io/projectdignity-community-island/tileset.png",
+        tilesetUrl: REPO_URL + "tileset.png",
         //"http://localhost:5500/public/tileset.png",
       },
       player: {
@@ -93,44 +95,9 @@ export default class ExternalScene extends window.BaseScene {
       },
     ]); */
 
-    // place npcs
-    const tiff = this.add.sprite(745, 610, "TiffNPC");
-    this.anims.create({
-      key: "tiff_anim",
-      frames: this.anims.generateFrameNumbers("TiffNPC", {
-        start: 0,
-        end: 8,
-      }),
-      frameRate: 10,
-      repeat: -1,
+    CustomNPCs.forEach((npc) => {
+      this.PlaceCustomNPC(npc);
     });
-    tiff.play("tiff_anim", true);
-    // make tiff on top of label
-    tiff.setDepth(2);
-    tiff.setInteractive();
-    tiff.on("pointerdown", () => {
-      if (this.CheckPlayerDistance(745, 610)) return;
-      window.openModal({
-        type: "speaking",
-        messages: [
-          {
-            text: "Howdy farmer, I'm Tiffanydys but you can call me Tiff, I'm the Co-Founder of Project Dignity. Feel free to check us out!",
-            actions: [
-              {
-                text: "Visit Project Dignity",
-                cb: () => {
-                  window.open("https://dignity-games.com/", "_blank");
-                },
-              },
-            ],
-          },
-        ],
-      });
-    });
-    const label = new Label(this, "Tiff");
-    this.add.existing(label);
-    label.setPosition(tiff.x, tiff.y - 15);
-    label.setDepth(1);
 
     // Seal animation
     const seal = this.add.sprite(825, 650, "AnimatedSeal");
@@ -146,14 +113,14 @@ export default class ExternalScene extends window.BaseScene {
     seal.play("seal_anim", true);
 
     // For local testing, allow Scene refresh with spacebar
-    /* this.events.on("shutdown", () => {
+    this.events.on("shutdown", () => {
       this.cache.tilemap.remove("local");
       this.scene.remove("local");
     });
     const spaceBar = this.input.keyboard.addKey("SPACE");
     spaceBar.on("down", () => {
       this.scene.start("default");
-    }); */
+    });
   }
 
   update() {
@@ -162,6 +129,35 @@ export default class ExternalScene extends window.BaseScene {
           display player position for debugging
       */
     //console.log(this.currentPlayer.x, this.currentPlayer.y);
+  }
+
+  PlaceCustomNPC(npc: any) {
+    const custom_npc = this.add.sprite(710, 500, npc.name);
+    this.anims.create({
+      key: npc.name + "_anim",
+      frames: this.anims.generateFrameNumbers(npc.name, {
+        start: 0,
+        end: 8,
+      }),
+      frameRate: 10,
+      repeat: -1,
+    });
+    custom_npc.play(npc.name + "_anim", true);
+    custom_npc.setDepth(2);
+    custom_npc.setInteractive();
+
+    if (npc.modal) {
+      custom_npc.on("pointerdown", () => {
+        if (this.CheckPlayerDistance(710, 500)) return;
+
+        window.openModal(npc.modal);
+      });
+    }
+
+    const label = new Label(this, npc.name);
+    this.add.existing(label);
+    label.setPosition(custom_npc.x, custom_npc.y - 15);
+    label.setDepth(1);
   }
 
   CheckPlayerDistance(x: number, y: number) {
