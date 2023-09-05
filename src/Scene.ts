@@ -46,14 +46,14 @@ export default class ExternalScene extends window.BaseScene {
     });
 
     // For local testing, allow Scene refresh with spacebar
-    /* this.events.on("shutdown", () => {
+    this.events.on("shutdown", () => {
       this.cache.tilemap.remove("local");
       this.scene.remove("local");
     });
     const spaceBar = this.input.keyboard.addKey("SPACE");
     spaceBar.on("down", () => {
       this.scene.start("default");
-    }); */
+    });
   }
 
   update() {
@@ -66,6 +66,11 @@ export default class ExternalScene extends window.BaseScene {
             console.log("Incoming transmission...", message);
           }
         );
+
+      this.mmoService.state.context.server?.send(1, {
+        text: "Hello World!",
+        event: "player.join.blue",
+      });
     }
   }
 
