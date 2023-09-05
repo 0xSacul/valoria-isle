@@ -58,6 +58,15 @@ export default class ExternalScene extends window.BaseScene {
 
   update() {
     super.update();
+
+    if (!this.listener) {
+      this.listener =
+        this.mmoService.state.context.server?.state.messages.onAdd(
+          (message: any) => {
+            console.log("Incoming transmission...", message);
+          }
+        );
+    }
   }
 
   PlaceCustomNPC(npc: CustomNPC) {
