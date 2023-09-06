@@ -435,8 +435,8 @@ export const CustomNPCs: CustomNPC[] = [
   },
   {
     id: "boat_smoke",
-    x: 520,
-    y: 840,
+    x: 480,
+    y: 810,
     spitesheet: "boat_smoke.png",
     isAnimated: true,
     sheet: {
