@@ -116,6 +116,18 @@ export default class ExternalScene extends window.BaseScene {
       this.add.existing(label);
       label.setPosition(custom_npc.x, custom_npc.y - 12.5);
       label.setDepth(1);
+
+      const npcBox = this.add.rectangle(
+        custom_npc.x,
+        custom_npc.y - 2.5,
+        25,
+        30,
+        0x000000,
+        0
+      );
+
+      this.physics.add.existing(npcBox, true);
+      this.physics.add.collider(this.currentPlayer, npcBox);
     }
   }
 
