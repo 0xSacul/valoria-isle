@@ -14,8 +14,8 @@ export default class ExternalScene extends window.BaseScene {
       },
       player: {
         spawn: {
-          x: 760, // 256  824
-          y: 635, // 566  140
+          x: 567, // 256  824
+          y: 785, // 566  140
         },
       },
       mmo: {
@@ -31,10 +31,14 @@ export default class ExternalScene extends window.BaseScene {
     super.preload();
 
     CustomNPCs.forEach((npc) => {
-      this.load.spritesheet(npc.name + "NPC", REPO_URL + npc.spitesheet, {
-        frameWidth: npc.sheet.width,
-        frameHeight: npc.sheet.height,
-      });
+      if (npc.isAnimated) {
+        this.load.spritesheet(npc.id + "NPC", REPO_URL + npc.spitesheet, {
+          frameWidth: npc.sheet.width,
+          frameHeight: npc.sheet.height,
+        });
+      } else {
+        this.load.image(npc.id + "NPC", REPO_URL + npc.spitesheet);
+      }
     });
   }
 
@@ -59,6 +63,8 @@ export default class ExternalScene extends window.BaseScene {
   update() {
     super.update();
 
+    //console.log(this.currentPlayer.x, this.currentPlayer.y);
+
     if (!this.listener) {
       this.listener =
         this.mmoService.state.context.server?.state.messages.onAdd(
@@ -75,23 +81,31 @@ export default class ExternalScene extends window.BaseScene {
   }
 
   PlaceCustomNPC(npc: CustomNPC) {
-    const custom_npc = this.add.sprite(npc.x, npc.y, npc.name + "NPC");
-    this.anims.create({
-      key: npc.name + "_anim",
-      frames: this.anims.generateFrameNumbers(npc.name + "NPC", {
-        start: npc.sheet.frames.start,
-        end: npc.sheet.frames.end,
-      }),
-      frameRate: npc.sheet.frames.rate,
-      repeat: -1,
-    });
-    custom_npc.play(npc.name + "_anim", true);
+    const custom_npc = this.add.sprite(npc.x, npc.y, npc.id + "NPC");
+    if (npc.isAnimated) {
+      this.anims.create({
+        key: npc.id + "_anim",
+        frames: this.anims.generateFrameNumbers(npc.id + "NPC", {
+          start: npc.sheet.frames?.start,
+          end: npc.sheet.frames?.end,
+        }),
+        frameRate: npc.sheet.frames?.rate,
+        repeat: -1,
+      });
+      custom_npc.play(npc.id + "_anim", true);
+    }
     custom_npc.setDepth(2);
     custom_npc.setInteractive();
+    custom_npc.on("pointerover", () => {
+      this.input.setDefaultCursor("pointer");
+    });
+    custom_npc.on("pointerout", () => {
+      this.input.setDefaultCursor("default");
+    });
 
     if (npc.modal) {
       custom_npc.on("pointerdown", () => {
-        if (this.CheckPlayerDistance(npc.x, npc.y)) return;
+        if (npc.id !== "boat" && this.CheckPlayerDistance(npc.x, npc.y)) return;
 
         window.openModal(npc.modal as CommunityModals);
       });
