@@ -9,6 +9,7 @@
     "lint": "eslint --ext .js,.jsx,.ts,.tsx ./src"
   },
   "dependencies": {
+    "@types/node": "^20.5.9",
     "classnames": "^2.3.2",
     "esbuild": "0.18.15",
     "phaser": "^3.60.0",

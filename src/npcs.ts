@@ -30,6 +30,8 @@ export type CustomNPC = {
 };
 
 export const CustomNPCs: CustomNPC[] = [
+  // ===================== QUEST NPCS =====================
+
   {
     id: "vp",
     x: 630,
@@ -91,39 +93,6 @@ export const CustomNPCs: CustomNPC[] = [
     },
   },
   {
-    id: "sacul",
-    x: 750,
-    y: 500,
-    name: "Sacul",
-    isAnimated: true,
-    spitesheet: "npc/Sacul.png",
-    sheet: {
-      frames: {
-        start: 0,
-        end: 8,
-        rate: 10,
-      },
-      width: 20,
-      height: 19,
-    },
-    modal: {
-      type: "speaking",
-      messages: [
-        {
-          text: "Howdy farmer, I'm Tiffanydys but you can call me Tiff, I'm the Co-Founder of Project Dignity. Feel free to check us out!",
-          actions: [
-            {
-              text: "Visit Project Dignity",
-              cb: () => {
-                window.open("https://dignity-games.com/", "_blank");
-              },
-            },
-          ],
-        },
-      ],
-    },
-  },
-  {
     id: "paluras",
     x: 565,
     y: 480,
@@ -141,39 +110,6 @@ export const CustomNPCs: CustomNPC[] = [
     },
     onClick: () => {
       questModalManager.open("Paluras");
-    },
-  },
-  {
-    id: "granty",
-    x: 790,
-    y: 500,
-    name: "GranTY",
-    isAnimated: true,
-    spitesheet: "npc/Granty.png",
-    sheet: {
-      frames: {
-        start: 0,
-        end: 8,
-        rate: 10,
-      },
-      width: 20,
-      height: 19,
-    },
-    modal: {
-      type: "speaking",
-      messages: [
-        {
-          text: "Howdy farmer, I'm Tiffanydys but you can call me Tiff, I'm the Co-Founder of Project Dignity. Feel free to check us out!",
-          actions: [
-            {
-              text: "Visit Project Dignity",
-              cb: () => {
-                window.open("https://dignity-games.com/", "_blank");
-              },
-            },
-          ],
-        },
-      ],
     },
   },
   {
@@ -217,6 +153,62 @@ export const CustomNPCs: CustomNPC[] = [
     },
   },
   {
+    id: "sacul",
+    x: 600,
+    y: 760,
+    name: "Sacul",
+    isAnimated: true,
+    spitesheet: "npc/Sacul.png",
+    sheet: {
+      frames: {
+        start: 0,
+        end: 8,
+        rate: 10,
+      },
+      width: 20,
+      height: 19,
+    },
+    onClick: () => {
+      questModalManager.open("Sacul");
+    },
+  },
+
+  // ===================== CUSTOM NPCS =====================
+
+  {
+    id: "granty",
+    x: 790,
+    y: 500,
+    name: "GranTY",
+    isAnimated: true,
+    spitesheet: "npc/Granty.png",
+    sheet: {
+      frames: {
+        start: 0,
+        end: 8,
+        rate: 10,
+      },
+      width: 20,
+      height: 19,
+    },
+    modal: {
+      type: "speaking",
+      messages: [
+        {
+          text: "Howdy farmer, I'm Tiffanydys but you can call me Tiff, I'm the Co-Founder of Project Dignity. Feel free to check us out!",
+          actions: [
+            {
+              text: "Visit Project Dignity",
+              cb: () => {
+                window.open("https://dignity-games.com/", "_blank");
+              },
+            },
+          ],
+        },
+      ],
+    },
+  },
+  {
     id: "cloud",
     x: 850,
     y: 500,
@@ -251,8 +243,8 @@ export const CustomNPCs: CustomNPC[] = [
   },
   {
     id: "boden",
-    x: 870,
-    y: 500,
+    x: 540,
+    y: 760,
     name: "Boden",
     isAnimated: true,
     spitesheet: "npc/Boden.png",
@@ -269,12 +261,22 @@ export const CustomNPCs: CustomNPC[] = [
       type: "speaking",
       messages: [
         {
-          text: "Howdy farmer, I'm Tiffanydys but you can call me Tiff, I'm the Co-Founder of Project Dignity. Feel free to check us out!",
+          text: "Howdy farmer, I'm Boden! I'm an artist at Project Dignity. Welcome to our Island fellow farmer!",
+        },
+        {
+          text: "This Island is pretty big, would you like to have a quick look around? Or you can also come and check us out!",
           actions: [
+            {
+              text: "Sure! Show me around!",
+              cb: () => {
+                window.CurrentScene.DiscoverIsland();
+              },
+            },
             {
               text: "Visit Project Dignity",
               cb: () => {
                 window.open("https://dignity-games.com/", "_blank");
+                window.closeModal();
               },
             },
           ],
@@ -315,6 +317,9 @@ export const CustomNPCs: CustomNPC[] = [
       ],
     },
   },
+
+  // ===================== CUSTOM NON-NPCS =====================
+
   {
     id: "seal",
     x: 680,

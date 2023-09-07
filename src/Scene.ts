@@ -5,7 +5,8 @@ import Phaser from "phaser";
 import { CommunityModals } from "./types";
 import { Label } from "./Components/Label";
 import { CustomNPC, CustomNPCs } from "./npcs";
-import { QuestModal } from "./Components/QuestModal";
+
+import { UI } from "./UI";
 
 const REPO_URL = "https://0xsacul.github.io/projectdignity-community-island/";
 
@@ -23,8 +24,8 @@ export default class ExternalScene extends window.BaseScene {
       },
       player: {
         spawn: {
-          x: 550, // 256  824
-          y: 500, // 566  140
+          x: 567,
+          y: 770,
         },
       },
       mmo: {
@@ -54,10 +55,6 @@ export default class ExternalScene extends window.BaseScene {
   create() {
     super.create();
 
-    CustomNPCs.forEach((npc) => {
-      this.PlaceCustomNPC(npc);
-    });
-
     // For local testing, allow Scene refresh with spacebar
     this.events.on("shutdown", () => {
       this.cache.tilemap.remove("local");
@@ -69,11 +66,13 @@ export default class ExternalScene extends window.BaseScene {
     });
 
     ReactDOM.render(
-      React.createElement(QuestModal),
+      React.createElement(UI),
       document.getElementById("community-root")
     );
 
-    console.log(CommunityAPI);
+    CustomNPCs.forEach((npc) => {
+      this.PlaceCustomNPC(npc);
+    });
   }
 
   update() {
@@ -94,15 +93,18 @@ export default class ExternalScene extends window.BaseScene {
   PlaceCustomNPC(npc: CustomNPC) {
     const custom_npc = this.add.sprite(npc.x, npc.y, npc.id + "NPC");
     if (npc.isAnimated) {
-      this.anims.create({
-        key: npc.id + "_anim",
-        frames: this.anims.generateFrameNumbers(npc.id + "NPC", {
-          start: npc.sheet.frames?.start,
-          end: npc.sheet.frames?.end,
-        }),
-        frameRate: npc.sheet.frames?.rate,
-        repeat: -1,
-      });
+      if (!this.anims.anims.entries[npc.id + "_anim"]) {
+        this.anims.create({
+          key: npc.id + "_anim",
+          frames: this.anims.generateFrameNumbers(npc.id + "NPC", {
+            start: npc.sheet.frames?.start,
+            end: npc.sheet.frames?.end,
+          }),
+          frameRate: npc.sheet.frames?.rate,
+          repeat: -1,
+        });
+      }
+
       custom_npc.play(npc.id + "_anim", true);
     }
     custom_npc.setDepth(2);
@@ -156,6 +158,11 @@ export default class ExternalScene extends window.BaseScene {
     );
     return player_distance > 40;
   }
+
+  DiscoverIsland() {
+    console.log("Discovering island...");
+  }
 }
 
 window.ExternalScene = ExternalScene;
+window.CurrentScene = new ExternalScene();

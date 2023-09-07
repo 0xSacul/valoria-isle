@@ -53,6 +53,7 @@ interface CommunityAPI {
   burn: (burn: CommunityAPICall) => void;
   game: {
     inventory: Partial<Record<string, number>>;
+    wardrobe: Partial<Record<string, number>>;
   };
   user: {
     farmId: number;
@@ -71,5 +72,6 @@ declare global {
     closeModal: () => void;
     CommunityAPI: CommunityAPIConstructor;
     ExternalScene: typeof ExternalScene;
+    CurrentScene: ExternalScene;
   }
 }

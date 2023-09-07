@@ -1,8 +1,9 @@
-import { QuestNPCName } from "./lib/npc";
 import React, { useEffect, useState } from "react";
 import { Modal } from "react-bootstrap";
+import { QuestNPCName } from "./lib/npc";
 
 // Quests
+import { QuestSacul } from "../Quests/Sacul";
 import { QuestTiff } from "../Quests/Tiff";
 import { QuestLysari } from "../Quests/Lysari";
 import { QuestVeyari } from "../Quests/Veyari";
@@ -28,9 +29,8 @@ export const QuestModal: React.FC = () => {
   const [npc, setNpc] = useState<QuestNPCName>();
 
   useEffect(() => {
-    questModalManager.listen((npc, open) => {
+    questModalManager.listen((npc) => {
       setNpc(npc);
-      console.log("open", npc, open);
     });
   }, []);
 
@@ -41,6 +41,7 @@ export const QuestModal: React.FC = () => {
   return (
     <>
       <Modal show={!!npc} centered onHide={closeModal}>
+        {npc === "Sacul" && <QuestSacul onClose={closeModal} />}
         {npc === "Tiff" && <QuestTiff onClose={closeModal} />}
         {npc === "Paluras" && <QuestLysari onClose={closeModal} />}
         {npc === "Shykun" && <QuestVeyari onClose={closeModal} />}
