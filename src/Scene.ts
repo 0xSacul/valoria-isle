@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import Phaser from "phaser";
 
-import { CommunityModals } from "./types";
+import { CommunityModals, DatabaseData } from "./types";
 import { Label } from "./Components/Label";
 import { CustomNPC, CustomNPCs } from "./npcs";
 
@@ -66,7 +66,7 @@ export default class ExternalScene extends window.BaseScene {
     });
 
     ReactDOM.render(
-      React.createElement(UI),
+      React.createElement(UI, { scene: this }),
       document.getElementById("community-root")
     );
 
@@ -77,16 +77,15 @@ export default class ExternalScene extends window.BaseScene {
 
   update() {
     super.update();
-
     //console.log(this.currentPlayer.x, this.currentPlayer.y);
 
     if (!this.listener) {
-      this.listener =
-        this.mmoService.state.context.server?.state.messages.onAdd(
-          (message: any) => {
-            console.log("Incoming transmission...", message);
-          }
-        );
+      this.listener = this.mmoService.state.context.server?.onMessage(
+        "player_data",
+        (message: DatabaseData) => {
+          this.updateUserData(message);
+        }
+      );
     }
   }
 
@@ -149,6 +148,29 @@ export default class ExternalScene extends window.BaseScene {
     }
   }
 
+  updateUserData(db_data: DatabaseData) {
+    if (db_data.farmId !== this.mmoService.state.context.farmId) return;
+    const playerWardrobe = CommunityAPI.game.wardrobe;
+
+    if (!db_data.quests.sacul && playerWardrobe["Project Dignity Hoodie"]) {
+      db_data.quests.sacul = "owns";
+    }
+
+    this.currentPlayer.db_data = db_data;
+
+    console.warn("[PD Island] Player Data Updated", db_data);
+  }
+
+  sendQuestUpdate(quest: string, value: string) {
+    const current_quests = this.currentPlayer.db_data.quests;
+
+    if (current_quests[quest] === value) return;
+
+    current_quests[quest] = value;
+
+    this.mmoService.state.context.server?.send("quest_event", current_quests);
+  }
+
   CheckPlayerDistance(x: number, y: number) {
     const player_distance = Phaser.Math.Distance.Between(
       this.currentPlayer.x,
@@ -165,4 +187,3 @@ export default class ExternalScene extends window.BaseScene {
 }
 
 window.ExternalScene = ExternalScene;
-window.CurrentScene = new ExternalScene();

@@ -2,10 +2,14 @@ import React from "react";
 
 import { QuestModal } from "./Components/QuestModal";
 
-export const UI: React.FC = () => {
+type Props = {
+  scene: any;
+};
+
+export const UI: React.FC<Props> = ({ scene }) => {
   return (
     <>
-      <QuestModal />
+      <QuestModal scene={scene} />
     </>
   );
 };

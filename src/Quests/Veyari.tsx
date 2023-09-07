@@ -4,19 +4,19 @@ import { CommunityAPI } from "../Scene";
 
 interface Props {
   onClose: () => void;
+  scene: any;
 }
-export const QuestVeyari: React.FC<Props> = ({ onClose }) => {
+export const QuestVeyari: React.FC<Props> = ({ onClose, scene }) => {
   const [step, setStep] = useState<number>(0);
   const [canBurn, setCanBurn] = useState<boolean>(false);
 
   const playerInventory = CommunityAPI.game.inventory;
 
   useEffect(() => {
-    const PDLocalStorage = JSON.parse(
-      localStorage.getItem("projectdignity.quest") || "{}"
-    );
-    if (PDLocalStorage.veyari === "waiting") setStep(2);
-    if (PDLocalStorage.veyari === "done") setStep(3.1);
+    const player_quests = scene.currentPlayer.db_data.quests || {};
+
+    if (player_quests.veyari === "waiting") setStep(2);
+    if (player_quests.veyari === "done") setStep(3.1);
 
     const kale = Number(playerInventory["Kale"] || 0);
     const mushrooms = Number(playerInventory["Mushrooms"] || 0);
@@ -25,18 +25,6 @@ export const QuestVeyari: React.FC<Props> = ({ onClose }) => {
       setCanBurn(true);
     }
   }, []);
-
-  const updatePDLocalStorage = (npc: string, status: string) => {
-    const PDLocalStorage = JSON.parse(
-      localStorage.getItem("projectdignity.quest") || "{}"
-    );
-
-    PDLocalStorage[npc] = status;
-    localStorage.setItem(
-      "projectdignity.quest",
-      JSON.stringify(PDLocalStorage)
-    );
-  };
 
   return (
     <>
@@ -53,7 +41,7 @@ export const QuestVeyari: React.FC<Props> = ({ onClose }) => {
                   text: "Sure, I'll get right on it.",
                   cb: () => {
                     setStep(1);
-                    updatePDLocalStorage("veyari", "waiting");
+                    scene.sendQuestUpdate("veyari", "waiting");
                   },
                 },
                 {

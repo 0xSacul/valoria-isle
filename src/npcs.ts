@@ -1,4 +1,5 @@
 import { questModalManager } from "./Components/QuestModal";
+import ExternalScene from "./Scene";
 
 export type CustomNPC = {
   id: string;
@@ -152,6 +153,9 @@ export const CustomNPCs: CustomNPC[] = [
       questModalManager.open("Ded");
     },
   },
+
+  // ===================== CUSTOM NPCS =====================
+
   {
     id: "sacul",
     x: 600,
@@ -172,9 +176,6 @@ export const CustomNPCs: CustomNPC[] = [
       questModalManager.open("Sacul");
     },
   },
-
-  // ===================== CUSTOM NPCS =====================
-
   {
     id: "granty",
     x: 790,
@@ -269,7 +270,7 @@ export const CustomNPCs: CustomNPC[] = [
             {
               text: "Sure! Show me around!",
               cb: () => {
-                window.CurrentScene.DiscoverIsland();
+                new ExternalScene().DiscoverIsland();
               },
             },
             {

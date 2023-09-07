@@ -4,19 +4,19 @@ import { CommunityAPI } from "../Scene";
 
 interface Props {
   onClose: () => void;
+  scene: any;
 }
-export const QuestTiff: React.FC<Props> = ({ onClose }) => {
+export const QuestTiff: React.FC<Props> = ({ onClose, scene }) => {
   const [step, setStep] = useState<number>(0);
   const [canBurn, setCanBurn] = useState<boolean>(false);
 
   const playerInventory = CommunityAPI.game.inventory;
 
   useEffect(() => {
-    const PDLocalStorage = JSON.parse(
-      localStorage.getItem("projectdignity.quest") || "{}"
-    );
-    if (PDLocalStorage.tiff === "waiting") setStep(6);
-    if (PDLocalStorage.tiff === "done") setStep(7);
+    const player_quests = scene.currentPlayer.db_data.quests || {};
+
+    if (player_quests.tiff === "waiting") setStep(6);
+    if (player_quests.tiff === "done") setStep(7);
 
     const carrots = Number(playerInventory["Carrot"] || 0);
     const potatoes = Number(playerInventory["Potato"] || 0);
@@ -26,18 +26,6 @@ export const QuestTiff: React.FC<Props> = ({ onClose }) => {
       setCanBurn(true);
     }
   }, []);
-
-  const updatePDLocalStorage = (npc: string, status: string) => {
-    const PDLocalStorage = JSON.parse(
-      localStorage.getItem("projectdignity.quest") || "{}"
-    );
-
-    PDLocalStorage[npc] = status;
-    localStorage.setItem(
-      "projectdignity.quest",
-      JSON.stringify(PDLocalStorage)
-    );
-  };
 
   return (
     <>
@@ -120,7 +108,7 @@ export const QuestTiff: React.FC<Props> = ({ onClose }) => {
                   text: "Sure, I'll get right on it.",
                   cb: () => {
                     setStep(5);
-                    updatePDLocalStorage("tiff", "waiting");
+                    scene.sendQuestUpdate("tiff", "waiting");
                   },
                 },
                 {
@@ -145,7 +133,7 @@ export const QuestTiff: React.FC<Props> = ({ onClose }) => {
                   text: "Alright, I'll get the food.",
                   cb: () => {
                     setStep(5);
-                    updatePDLocalStorage("tiff", "waiting");
+                    scene.sendQuestUpdate("tiff", "waiting");
                   },
                 },
                 {

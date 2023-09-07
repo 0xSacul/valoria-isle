@@ -4,19 +4,19 @@ import { CommunityAPI } from "../Scene";
 
 interface Props {
   onClose: () => void;
+  scene: any;
 }
-export const QuestLysari: React.FC<Props> = ({ onClose }) => {
+export const QuestLysari: React.FC<Props> = ({ onClose, scene }) => {
   const [step, setStep] = useState<number>(0);
   const [canBurn, setCanBurn] = useState<boolean>(false);
 
   const playerInventory = CommunityAPI.game.inventory;
 
   useEffect(() => {
-    const PDLocalStorage = JSON.parse(
-      localStorage.getItem("projectdignity.quest") || "{}"
-    );
-    if (PDLocalStorage.lysari === "waiting") setStep(2);
-    if (PDLocalStorage.lysari === "done") setStep(3.1);
+    const player_quests = scene.currentPlayer.db_data.quests || {};
+
+    if (player_quests.lysari === "waiting") setStep(2);
+    if (player_quests.lysari === "done") setStep(3.1);
 
     const wood = Number(playerInventory["Wood"] || 0);
     const iron = Number(playerInventory["Iron"] || 0);
@@ -25,18 +25,6 @@ export const QuestLysari: React.FC<Props> = ({ onClose }) => {
       setCanBurn(true);
     }
   }, []);
-
-  const updatePDLocalStorage = (npc: string, status: string) => {
-    const PDLocalStorage = JSON.parse(
-      localStorage.getItem("projectdignity.quest") || "{}"
-    );
-
-    PDLocalStorage[npc] = status;
-    localStorage.setItem(
-      "projectdignity.quest",
-      JSON.stringify(PDLocalStorage)
-    );
-  };
 
   return (
     <>
@@ -53,7 +41,7 @@ export const QuestLysari: React.FC<Props> = ({ onClose }) => {
                   text: "Sure, I'll get right on it.",
                   cb: () => {
                     setStep(1);
-                    updatePDLocalStorage("lysari", "waiting");
+                    scene.sendQuestUpdate("lysari", "waiting");
                   },
                 },
                 {

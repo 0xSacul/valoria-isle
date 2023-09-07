@@ -25,7 +25,11 @@ class QuestModalManager {
 
 export const questModalManager = new QuestModalManager();
 
-export const QuestModal: React.FC = () => {
+type Props = {
+  scene: any;
+};
+
+export const QuestModal: React.FC<Props> = ({ scene }) => {
   const [npc, setNpc] = useState<QuestNPCName>();
 
   useEffect(() => {
@@ -41,11 +45,13 @@ export const QuestModal: React.FC = () => {
   return (
     <>
       <Modal show={!!npc} centered onHide={closeModal}>
-        {npc === "Sacul" && <QuestSacul onClose={closeModal} />}
-        {npc === "Tiff" && <QuestTiff onClose={closeModal} />}
-        {npc === "Paluras" && <QuestLysari onClose={closeModal} />}
-        {npc === "Shykun" && <QuestVeyari onClose={closeModal} />}
-        {npc === "VP" && <QuestPyrari onClose={closeModal} />}
+        {npc === "Sacul" && <QuestSacul scene={scene} onClose={closeModal} />}
+        {npc === "Tiff" && <QuestTiff scene={scene} onClose={closeModal} />}
+        {npc === "Paluras" && (
+          <QuestLysari scene={scene} onClose={closeModal} />
+        )}
+        {npc === "Shykun" && <QuestVeyari scene={scene} onClose={closeModal} />}
+        {npc === "VP" && <QuestPyrari scene={scene} onClose={closeModal} />}
       </Modal>
     </>
   );

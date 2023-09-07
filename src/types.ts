@@ -40,6 +40,17 @@ export type CommunityModals = {
   }[];
 };
 
+export type DatabaseData = {
+  farmId: number;
+  visitCount: number;
+  wallet: string;
+  farm: string;
+  quests: {
+    sacul?: string;
+  };
+  assets: Array<any>;
+};
+
 type CommunityAPICallRecord = Record<string, number>;
 
 interface CommunityAPICall {
@@ -72,6 +83,5 @@ declare global {
     closeModal: () => void;
     CommunityAPI: CommunityAPIConstructor;
     ExternalScene: typeof ExternalScene;
-    CurrentScene: ExternalScene;
   }
 }

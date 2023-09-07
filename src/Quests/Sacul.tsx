@@ -1,45 +1,22 @@
 import React, { useEffect, useState } from "react";
 import { SpeakingModal } from "../Components/SpeakingModal";
-import { CommunityAPI } from "../Scene";
 
 interface Props {
   onClose: () => void;
+  scene: any;
 }
-export const QuestSacul: React.FC<Props> = ({ onClose }) => {
+export const QuestSacul: React.FC<Props> = ({ onClose, scene }) => {
   const [step, setStep] = useState<number>(0);
 
-  const playerWardrobe = CommunityAPI.game.wardrobe;
-
   useEffect(() => {
-    const PDLocalStorage = JSON.parse(
-      localStorage.getItem("projectdignity.quest") || "{}"
-    );
+    const player_quests = scene.currentPlayer.db_data.quests || {};
 
-    if (PDLocalStorage.sacul === "found") setStep(1);
-
-    const hasItem = playerWardrobe["Project Dignity Hoodie"] ? true : true;
-
-    if (hasItem && PDLocalStorage.sacul !== "found") {
+    if (player_quests.sacul === "found") setStep(1);
+    if (player_quests.sacul === "onws") {
       setStep(2);
-      PDLocalStorage.sacul = "found";
-      localStorage.setItem(
-        "projectdignity.quest",
-        JSON.stringify(PDLocalStorage)
-      );
+      scene.sendQuestUpdate("sacul", "found");
     }
   }, []);
-
-  const updatePDLocalStorage = (npc: string, status: string) => {
-    const PDLocalStorage = JSON.parse(
-      localStorage.getItem("projectdignity.quest") || "{}"
-    );
-
-    PDLocalStorage[npc] = status;
-    localStorage.setItem(
-      "projectdignity.quest",
-      JSON.stringify(PDLocalStorage)
-    );
-  };
 
   return (
     <>
@@ -62,7 +39,7 @@ export const QuestSacul: React.FC<Props> = ({ onClose }) => {
                   text: "Accept what he's giving you",
                   cb: () => {
                     setStep(1);
-                    updatePDLocalStorage("sacul", "found");
+                    scene.sendQuestUpdate("sacul", "found");
                     onClose();
                   },
                 },
