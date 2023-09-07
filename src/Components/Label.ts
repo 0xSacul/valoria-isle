@@ -16,7 +16,6 @@ export class Label extends Phaser.GameObjects.Container {
       text.toUpperCase(),
       5
     );
-    const bounds = name.getBounds();
 
     const label = (this.scene.add as any).rexNinePatch({
       x: 0,
@@ -34,12 +33,5 @@ export class Label extends Phaser.GameObjects.Container {
     this.add(name);
 
     this.setDepth(1);
-
-    // if (icon) {
-    // const sprite = scene.add.sprite(0, 0, "hammer");
-    // sprite.setPosition(-2, -2);
-
-    // this.add(sprite);
-    // }
   }
 }

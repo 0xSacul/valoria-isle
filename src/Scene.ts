@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import Phaser from "phaser";
 
-import { Clothing, DefaultNPC, TiffNPC, CommunityModals } from "./types";
+import { CommunityModals } from "./types";
 import { Label } from "./Components/Label";
 import { CustomNPC, CustomNPCs } from "./npcs";
 import { QuestModal } from "./Components/QuestModal";
@@ -128,7 +128,7 @@ export default class ExternalScene extends window.BaseScene {
     }
 
     if (npc.name) {
-      const label = new Label(this, npc.name);
+      const label = new Label(this as any, npc.name);
       this.add.existing(label);
       label.setPosition(custom_npc.x, custom_npc.y - 12.5);
       label.setDepth(1);
@@ -148,7 +148,7 @@ export default class ExternalScene extends window.BaseScene {
   }
 
   CheckPlayerDistance(x: number, y: number) {
-    let player_distance = Phaser.Math.Distance.Between(
+    const player_distance = Phaser.Math.Distance.Between(
       this.currentPlayer.x,
       this.currentPlayer.y,
       x,

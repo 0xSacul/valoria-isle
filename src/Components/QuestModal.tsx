@@ -1,5 +1,5 @@
 import { QuestNPCName } from "./lib/npc";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Modal } from "react-bootstrap";
 
 // Quests

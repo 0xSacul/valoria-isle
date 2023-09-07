@@ -1,10 +1,3 @@
-import { getIntroModal } from "./Quests/Introduction";
-import { getLysariModal } from "./Quests/Lysari";
-import { getVeyariModal } from "./Quests/Veyari";
-import { getPyrariModal } from "./Quests/Pyrari";
-import { getAerariModal } from "./Quests/Aerari";
-import { getFinalModal } from "./Quests/Final";
-
 import { questModalManager } from "./Components/QuestModal";
 
 export type CustomNPC = {

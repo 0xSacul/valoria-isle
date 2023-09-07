@@ -5,7 +5,8 @@
   "scripts": {
     "build": "npm run clean && esbuild ./src/Scene.ts --bundle --minify --tsconfig=tsconfig.json --outfile=public/Scene.js",
     "dev": "npm run clean && esbuild ./src/Scene.ts --bundle --minify --watch --tsconfig=tsconfig.json --outfile=public/Scene.js",
-    "clean": "rimraf public/Scene.js"
+    "clean": "rimraf public/Scene.js",
+    "lint": "eslint --ext .js,.jsx,.ts,.tsx ./src"
   },
   "dependencies": {
     "classnames": "^2.3.2",
@@ -13,12 +14,15 @@
     "phaser": "^3.60.0",
     "react": "^18.2.0",
     "react-bootstrap": "^2.8.0",
-    "react-dom": "^18.2.0",
-    "typescript": "^5.1.6"
+    "react-dom": "^18.2.0"
   },
   "devDependencies": {
     "@types/react": "^18.2.21",
     "@types/react-dom": "^18.2.7",
-    "rimraf": "^5.0.1"
+    "@typescript-eslint/eslint-plugin": "^6.6.0",
+    "@typescript-eslint/parser": "^6.6.0",
+    "eslint": "^8.48.0",
+    "rimraf": "^5.0.1",
+    "typescript": "^5.2.2"
   }
 }
