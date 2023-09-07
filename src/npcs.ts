@@ -1,3 +1,12 @@
+import { getIntroModal } from "./Quests/Introduction";
+import { getLysariModal } from "./Quests/Lysari";
+import { getVeyariModal } from "./Quests/Veyari";
+import { getPyrariModal } from "./Quests/Pyrari";
+import { getAerariModal } from "./Quests/Aerari";
+import { getFinalModal } from "./Quests/Final";
+
+import { questModalManager } from "./Components/QuestModal";
+
 export type CustomNPC = {
   id: string;
   x: number;
@@ -24,13 +33,14 @@ export type CustomNPC = {
       }[];
     }[];
   };
+  onClick?: () => void;
 };
 
 export const CustomNPCs: CustomNPC[] = [
   {
     id: "vp",
-    x: 690,
-    y: 500,
+    x: 630,
+    y: 480,
     name: "VP",
     isAnimated: true,
     spitesheet: "npc/VP.png",
@@ -43,27 +53,14 @@ export const CustomNPCs: CustomNPC[] = [
       width: 20,
       height: 19,
     },
-    modal: {
-      type: "speaking",
-      messages: [
-        {
-          text: "Howdy farmer, I'm Tiffanydys but you can call me Tiff, I'm the Co-Founder of Project Dignity. Feel free to check us out!",
-          actions: [
-            {
-              text: "Visit Project Dignity",
-              cb: () => {
-                window.open("https://dignity-games.com/", "_blank");
-              },
-            },
-          ],
-        },
-      ],
+    onClick: () => {
+      questModalManager.open("VP");
     },
   },
   {
     id: "tiff",
-    x: 520,
-    y: 740,
+    x: 530,
+    y: 480,
     name: "Tiff",
     isAnimated: true,
     spitesheet: "npc/Tiff.png",
@@ -76,27 +73,14 @@ export const CustomNPCs: CustomNPC[] = [
       width: 20,
       height: 19,
     },
-    modal: {
-      type: "speaking",
-      messages: [
-        {
-          text: "Howdy farmer, I'm Tiffanydys but you can call me Tiff, I'm the Co-Founder of Project Dignity. Feel free to check us out!",
-          actions: [
-            {
-              text: "Visit Project Dignity",
-              cb: () => {
-                window.open("https://dignity-games.com/", "_blank");
-              },
-            },
-          ],
-        },
-      ],
+    onClick: () => {
+      questModalManager.open("Tiff");
     },
   },
   {
     id: "shykun",
-    x: 730,
-    y: 500,
+    x: 600,
+    y: 480,
     name: "Shykun",
     isAnimated: true,
     spitesheet: "npc/Shykun.png",
@@ -109,21 +93,8 @@ export const CustomNPCs: CustomNPC[] = [
       width: 20,
       height: 19,
     },
-    modal: {
-      type: "speaking",
-      messages: [
-        {
-          text: "Howdy farmer, I'm Tiffanydys but you can call me Tiff, I'm the Co-Founder of Project Dignity. Feel free to check us out!",
-          actions: [
-            {
-              text: "Visit Project Dignity",
-              cb: () => {
-                window.open("https://dignity-games.com/", "_blank");
-              },
-            },
-          ],
-        },
-      ],
+    onClick: () => {
+      questModalManager.open("Shykun");
     },
   },
   {
@@ -161,8 +132,8 @@ export const CustomNPCs: CustomNPC[] = [
   },
   {
     id: "paluras",
-    x: 770,
-    y: 500,
+    x: 565,
+    y: 480,
     name: "Paluras",
     isAnimated: true,
     spitesheet: "npc/Paluras.png",
@@ -175,21 +146,8 @@ export const CustomNPCs: CustomNPC[] = [
       width: 20,
       height: 19,
     },
-    modal: {
-      type: "speaking",
-      messages: [
-        {
-          text: "Howdy farmer, I'm Tiffanydys but you can call me Tiff, I'm the Co-Founder of Project Dignity. Feel free to check us out!",
-          actions: [
-            {
-              text: "Visit Project Dignity",
-              cb: () => {
-                window.open("https://dignity-games.com/", "_blank");
-              },
-            },
-          ],
-        },
-      ],
+    onClick: () => {
+      questModalManager.open("Paluras");
     },
   },
   {
@@ -241,21 +199,8 @@ export const CustomNPCs: CustomNPC[] = [
       width: 20,
       height: 19,
     },
-    modal: {
-      type: "speaking",
-      messages: [
-        {
-          text: "Howdy farmer, I'm Tiffanydys but you can call me Tiff, I'm the Co-Founder of Project Dignity. Feel free to check us out!",
-          actions: [
-            {
-              text: "Visit Project Dignity",
-              cb: () => {
-                window.open("https://dignity-games.com/", "_blank");
-              },
-            },
-          ],
-        },
-      ],
+    onClick: () => {
+      questModalManager.open("Dee");
     },
   },
   {
@@ -274,21 +219,8 @@ export const CustomNPCs: CustomNPC[] = [
       width: 20,
       height: 19,
     },
-    modal: {
-      type: "speaking",
-      messages: [
-        {
-          text: "Howdy farmer, I'm Tiffanydys but you can call me Tiff, I'm the Co-Founder of Project Dignity. Feel free to check us out!",
-          actions: [
-            {
-              text: "Visit Project Dignity",
-              cb: () => {
-                window.open("https://dignity-games.com/", "_blank");
-              },
-            },
-          ],
-        },
-      ],
+    onClick: () => {
+      questModalManager.open("Ded");
     },
   },
   {

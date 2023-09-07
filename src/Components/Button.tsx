@@ -1,0 +1,37 @@
+import React from "react";
+import classnames from "classnames";
+import { pixelLightBorderStyle } from "./lib/style";
+
+interface Props {
+  children: React.ReactNode;
+  onClick?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+  disabled?: boolean;
+  className?: string;
+  type?: "button" | "submit" | undefined;
+  longPress?: boolean;
+  longPressInterval?: number;
+}
+export const Button: React.FC<Props> = ({
+  children,
+  onClick,
+  disabled,
+  className,
+  type,
+}) => {
+  const clickEvents = { onClick: !disabled ? onClick : undefined };
+
+  return (
+    <button
+      className={classnames(
+        "bg-brown-200 w-full p-1 text-xs object-contain justify-center items-center hover:bg-brown-300 cursor-pointer flex disabled:opacity-50 ",
+        className
+      )}
+      type={type}
+      disabled={disabled}
+      style={pixelLightBorderStyle}
+      {...clickEvents}
+    >
+      <div className="mb-1">{children}</div>
+    </button>
+  );
+};

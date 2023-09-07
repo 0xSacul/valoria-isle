@@ -51,6 +51,12 @@ interface CommunityAPICall {
 interface CommunityAPI {
   mint: (mint: CommunityAPICall) => void;
   burn: (burn: CommunityAPICall) => void;
+  game: {
+    inventory: Partial<Record<string, number>>;
+  };
+  user: {
+    farmId: number;
+  };
 }
 
 interface CommunityAPIConstructor {

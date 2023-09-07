@@ -1,9 +1,18 @@
+import React from "react";
+import ReactDOM from "react-dom";
+import Phaser from "phaser";
+
 import { Clothing, DefaultNPC, TiffNPC, CommunityModals } from "./types";
 import { Label } from "./Components/Label";
 import { CustomNPC, CustomNPCs } from "./npcs";
-import Phaser from "phaser";
+import { QuestModal } from "./Components/QuestModal";
 
 const REPO_URL = "https://0xsacul.github.io/projectdignity-community-island/";
+
+export const CommunityAPI = new window.CommunityAPI({
+  id: "project_dignity",
+  apiKey: "b2d2d2c0-0b0b-4b0b-8b0b-0b0b0b0b0b0b",
+});
 
 export default class ExternalScene extends window.BaseScene {
   constructor() {
@@ -14,8 +23,8 @@ export default class ExternalScene extends window.BaseScene {
       },
       player: {
         spawn: {
-          x: 567, // 256  824
-          y: 785, // 566  140
+          x: 550, // 256  824
+          y: 500, // 566  140
         },
       },
       mmo: {
@@ -58,6 +67,13 @@ export default class ExternalScene extends window.BaseScene {
     spaceBar.on("down", () => {
       this.scene.start("default");
     });
+
+    ReactDOM.render(
+      React.createElement(QuestModal),
+      document.getElementById("community-root")
+    );
+
+    console.log(CommunityAPI);
   }
 
   update() {
@@ -72,11 +88,6 @@ export default class ExternalScene extends window.BaseScene {
             console.log("Incoming transmission...", message);
           }
         );
-
-      this.mmoService.state.context.server?.send(1, {
-        text: "Hello World!",
-        event: "player.join.blue",
-      });
     }
   }
 
@@ -108,6 +119,11 @@ export default class ExternalScene extends window.BaseScene {
         if (npc.id !== "boat" && this.CheckPlayerDistance(npc.x, npc.y)) return;
 
         window.openModal(npc.modal as CommunityModals);
+      });
+    } else {
+      custom_npc.on("pointerdown", () => {
+        if (npc.id !== "boat" && this.CheckPlayerDistance(npc.x, npc.y)) return;
+        if (npc.onClick) npc.onClick();
       });
     }
 
