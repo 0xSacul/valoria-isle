@@ -3,23 +3,29 @@ import { Modal } from "react-bootstrap";
 import { QuestNPCName } from "./lib/npc";
 
 // Quests
-import { QuestSacul } from "../Quests/Sacul";
-import { QuestTiff } from "../Quests/Tiff";
-import { QuestLysari } from "../Quests/Lysari";
-import { QuestVeyari } from "../Quests/Veyari";
-import { QuestPyrari } from "../Quests/Pyrari";
+import { QuestSacul } from "../Quests/Season 1/Sacul";
+import { QuestTiff } from "../Quests/Season 1/Tiff";
+import { QuestLysari } from "../Quests/Season 1/Lysari";
+import { QuestVeyari } from "../Quests/Season 1/Veyari";
+import { QuestPyrari } from "../Quests/Season 1/Pyrari";
+import { QuestSecretPath } from "../Quests/Season 1/SecretPath";
 
 class QuestModalManager {
   private listener?: (npc: QuestNPCName, isOpen: boolean) => void;
+  public preventClose: boolean = false;
 
   public open(npc: QuestNPCName) {
-    if (this.listener) {
+    if (!this.preventClose && this.listener) {
       this.listener(npc, true);
     }
   }
 
   public listen(cb: (npc: QuestNPCName, isOpen: boolean) => void) {
     this.listener = cb;
+  }
+
+  public setPreventClose(value: boolean) {
+    this.preventClose = value;
   }
 }
 
@@ -31,10 +37,14 @@ type Props = {
 
 export const QuestModal: React.FC<Props> = ({ scene }) => {
   const [npc, setNpc] = useState<QuestNPCName>();
+  const [preventClose, setPreventClose] = useState<boolean>(
+    questModalManager.preventClose
+  );
 
   useEffect(() => {
     questModalManager.listen((npc) => {
       setNpc(npc);
+      setPreventClose(questModalManager.preventClose);
     });
   }, []);
 
@@ -44,7 +54,12 @@ export const QuestModal: React.FC<Props> = ({ scene }) => {
 
   return (
     <>
-      <Modal show={!!npc} centered onHide={closeModal}>
+      <Modal
+        show={!!npc}
+        centered
+        onHide={closeModal}
+        backdrop={preventClose ? "static" : true}
+      >
         {npc === "Sacul" && <QuestSacul scene={scene} onClose={closeModal} />}
         {npc === "Tiff" && <QuestTiff scene={scene} onClose={closeModal} />}
         {npc === "Paluras" && (
@@ -52,6 +67,9 @@ export const QuestModal: React.FC<Props> = ({ scene }) => {
         )}
         {npc === "Shykun" && <QuestVeyari scene={scene} onClose={closeModal} />}
         {npc === "VP" && <QuestPyrari scene={scene} onClose={closeModal} />}
+        {npc === "SecretPath" && (
+          <QuestSecretPath scene={scene} onClose={closeModal} />
+        )}
       </Modal>
     </>
   );

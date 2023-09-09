@@ -5,4 +5,5 @@ export type QuestNPCName =
   | "VP"
   | "Ded"
   | "Dee"
-  | "Sacul";
+  | "Sacul"
+  | "SecretPath";

@@ -10,7 +10,7 @@ interface Props {
 export const TypingMessage: React.FC<Props> = ({
   message,
   onMessageEnd,
-  trail = 30,
+  trail,
   forceShowFullMessage = false,
 }) => {
   const [displayedMessage, setDisplayedMessage] = useState<string>("");

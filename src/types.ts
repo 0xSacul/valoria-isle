@@ -34,7 +34,7 @@ type CommunityToasts = {
 
 export type CommunityModals = {
   type: "speaking" | "loading";
-  messages: {
+  messages?: {
     text: string;
     actions?: { text: string; cb: () => void }[];
   }[];
@@ -47,6 +47,11 @@ export type DatabaseData = {
   farm: string;
   quests: {
     sacul?: string;
+    tiff?: string;
+    secret_path?: string;
+    pyrari?: string;
+    lysari?: string;
+    veyari?: string;
   };
   assets: Array<any>;
 };
@@ -60,8 +65,8 @@ interface CommunityAPICall {
 }
 
 interface CommunityAPI {
-  mint: (mint: CommunityAPICall) => void;
-  burn: (burn: CommunityAPICall) => void;
+  mint: (mint: CommunityAPICall) => Promise<void>;
+  burn: (burn: CommunityAPICall) => Promise<void>;
   game: {
     inventory: Partial<Record<string, number>>;
     wardrobe: Partial<Record<string, number>>;
