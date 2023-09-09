@@ -2,17 +2,20 @@ import React from "react";
 import ReactDOM from "react-dom";
 import Phaser from "phaser";
 
-import { CommunityModals, DatabaseData } from "./types";
+import { UI, uiManager } from "./UI";
 import { Label } from "./Components/Label";
-import { CustomNPC, CustomNPCs } from "./lib/npcs";
-
-import { UI } from "./UI";
-import { CustomObject, CustomObjects } from "./lib/objects";
-import { uiManager } from "./UI";
 import { notificationManager } from "./Components/Notification";
+import { CommunityModals, DatabaseData } from "./types";
 
-const REPO_URL = "https://0xsacul.github.io/projectdignity-community-island/";
+// Customs
+import { CustomNPC, CustomNPCs } from "./lib/npcs";
+import { CustomObject, CustomObjects } from "./lib/objects";
+import { CustomAudio, CustomAudios } from "./lib/audio";
 
+// Repo URL
+const REPO_URL = "https://sacul.cloud/pd-preview/"; //"https://0xsacul.github.io/projectdignity-community-island/";
+
+// Community API
 export const CommunityAPI = new window.CommunityAPI({
   id: "projectdignity",
   apiKey: "b96ee2b5-f1e9-41e2-a54a-9cbd6d624d48",
@@ -47,23 +50,6 @@ export default class ExternalScene extends window.BaseScene {
   preload() {
     super.preload();
 
-    this.load.audio(
-      "secret_path_discovery",
-      REPO_URL + "audio/SecretPathDiscovery.mp3"
-    );
-    this.load.audio(
-      "secret_path_discovery_2",
-      REPO_URL + "audio/SecretPathDiscovery2.mp3"
-    );
-    this.load.audio(
-      "secret_path_discovery_3",
-      REPO_URL + "audio/SecretPathDiscovery3.mp3"
-    );
-
-    this.load.audio("success", REPO_URL + "audio/Success.mp3");
-
-    this.load.audio("ambient", REPO_URL + "audio/TheFinalofTheFantasy.mp3");
-
     CustomNPCs.forEach((npc) => {
       if (npc.isAnimated) {
         this.load.spritesheet(npc.id + "NPC", REPO_URL + npc.spritesheet, {
@@ -84,6 +70,10 @@ export default class ExternalScene extends window.BaseScene {
       } else {
         this.load.image(obj.id + "Object", REPO_URL + obj.spritesheet);
       }
+    });
+
+    CustomAudios.forEach((audio) => {
+      this.load.audio(audio.id, REPO_URL + audio.url);
     });
   }
 
