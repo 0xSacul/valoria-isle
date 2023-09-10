@@ -13,7 +13,7 @@ import { CustomObject, CustomObjects } from "./lib/objects";
 import { CustomAudio, CustomAudios } from "./lib/audio";
 
 // Repo URL
-export const REPO_URL = "https://sacul.cloud/pd-preview/"; //"https://0xsacul.github.io/valoria-isle/";
+const REPO_URL = "https://sacul.cloud/pd-preview/"; //"https://0xsacul.github.io/valoria-isle/";
 
 // Community API
 export const CommunityAPI = new window.CommunityAPI({
@@ -106,6 +106,7 @@ export default class ExternalScene extends window.BaseScene {
       notificationManager.notification({
         title: "Congratulations!",
         description: "You've achieved your first Quest!",
+        icon: "Success",
       });
     }, 2500);
   }
@@ -129,6 +130,7 @@ export default class ExternalScene extends window.BaseScene {
 
     if (!this.leaveListener) {
       this.leaveListener = this.mmoService.state.context.server?.onLeave(() => {
+        console.error("[Valoria Isle] => Lost connection to server");
         uiManager.lostConnection();
       });
     }
@@ -263,13 +265,16 @@ export default class ExternalScene extends window.BaseScene {
     if (db_data.farmId !== this.mmoService.state.context.farmId) return;
     const playerWardrobe = CommunityAPI.game.wardrobe;
 
-    if (!db_data.quests.sacul && playerWardrobe["Project Dignity Hoodie"]) {
-      db_data.quests.sacul = "owns";
+    if (
+      !db_data.quests.season_1.sacul &&
+      playerWardrobe["Project Dignity Hoodie"]
+    ) {
+      db_data.quests.season_1.sacul = "owns";
     }
 
     this.currentPlayer.db_data = db_data;
 
-    console.warn("[Project Dignity Island] => Player Data Updated", db_data);
+    console.warn("[Valoria Isle] => Player Data Updated", db_data);
 
     this.updateUserMapSettings(db_data);
   }
@@ -330,7 +335,7 @@ export default class ExternalScene extends window.BaseScene {
   }
 
   updateUserMapSettings(db_data: DatabaseData) {
-    if (!db_data.quests.secret_path) {
+    if (!db_data.quests.season_1.secret_path) {
       /* const red_mushroom = this.children.getByName(
         "secret_path_red_mushroomObject"
       ) as Phaser.GameObjects.Sprite; */
@@ -339,7 +344,7 @@ export default class ExternalScene extends window.BaseScene {
       collision_box.name = "secret_path_collision_box";
       this.physics.add.existing(collision_box, true);
       this.physics.add.collider(this.currentPlayer, collision_box);
-    } else if (db_data.quests.secret_path === "found") {
+    } else if (db_data.quests.season_1.secret_path === "found") {
       const not_found_tree = this.children.getByName(
         "secret_path_tree_1Object"
       ) as Phaser.GameObjects.Sprite;
@@ -390,7 +395,7 @@ export default class ExternalScene extends window.BaseScene {
 
         this.sendQuestUpdate("season_1", "secret_path", "done");
       }, 15000);
-    } else if (db_data.quests.secret_path === "done") {
+    } else if (db_data.quests.season_1.secret_path === "done") {
       const not_found_tree = this.children.getByName(
         "secret_path_tree_1Object"
       ) as Phaser.GameObjects.Sprite;

@@ -2,7 +2,7 @@ import React from "react";
 import { Modal } from "react-bootstrap";
 import { Panel } from "./Panel";
 
-import { REPO_URL } from "../Scene";
+const REPO_URL = "https://sacul.cloud/pd-preview/"; //"https://0xsacul.github.io/valoria-isle/";
 
 const HumanDeath = REPO_URL + "assets/other/HumanDeath.gif";
 

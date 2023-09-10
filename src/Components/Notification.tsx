@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { InnerPanel } from "./Panel";
 
+const REPO_URL = "https://sacul.cloud/pd-preview/"; //"https://0xsacul.github.io/valoria-isle/";
+
+export type NotificationIcons = "ProjectDignityHoodie" | "Success";
+
 type Notification = {
-  icon?: string;
+  icon?: NotificationIcons;
   title: string;
   description: string;
 };
@@ -42,16 +46,25 @@ export const Notifications: React.FC<Props> = ({ scene }) => {
 
       setTimeout(() => {
         setNotification(undefined);
-      }, 5000);
+      }, 10000);
     });
   }, []);
+
+  const getIcon = (icon: NotificationIcons) => {
+    switch (icon) {
+      case "ProjectDignityHoodie":
+        return REPO_URL + "assets/icons/ProjectDignityHoodie.png";
+      case "Success":
+        return REPO_URL + "assets/icons/Success.gif";
+    }
+  };
 
   return (
     <>
       {notification && (
         <InnerPanel className="fixed top-2 left-1/2 -translate-x-1/2 flex items-center z-50 ease-in-out p-2">
           {notification.icon && (
-            <img src={undefined} className="w-6 mx-2 my-1" />
+            <img src={getIcon(notification.icon)} className="w-12 mr-1 ml-2" />
           )}
           <div className="flex flex-col">
             <div className="text-lg font-bold">{notification.title}</div>

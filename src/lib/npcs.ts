@@ -115,8 +115,8 @@ export const CustomNPCs: CustomNPC[] = [
   },
   {
     id: "dee",
-    x: 775,
-    y: 361,
+    x: 755,
+    y: 370,
     name: "Dee",
     isAnimated: true,
     spritesheet: "assets/npc/Dee.png",
@@ -174,15 +174,15 @@ export const CustomNPCs: CustomNPC[] = [
     },
   },
 
-  // ===================== CUSTOM NPCS =====================
+  // ===================== VILLAGERS =======================
 
   {
-    id: "granty",
-    x: 790,
+    id: "cloud",
+    x: 820,
     y: 500,
-    name: "GranTY",
+    name: "Cloud",
     isAnimated: true,
-    spritesheet: "assets/npc/Granty.png",
+    spritesheet: "assets/npc/Cloud.png",
     sheet: {
       frames: {
         start: 0,
@@ -192,30 +192,68 @@ export const CustomNPCs: CustomNPC[] = [
       width: 20,
       height: 19,
     },
-    modal: {
-      type: "speaking",
-      messages: [
-        {
-          text: "Howdy farmer, I'm Tiffanydys but you can call me Tiff, I'm the Co-Founder of Project Dignity. Feel free to check us out!",
-          actions: [
-            {
-              text: "Visit Project Dignity",
-              cb: () => {
-                window.open("https://dignity-games.com/", "_blank");
-              },
-            },
-          ],
-        },
-      ],
+  },
+  {
+    id: "daan",
+    x: 840,
+    y: 500,
+    name: "Daan",
+    isAnimated: true,
+    spritesheet: "assets/npc/Daan.png",
+    sheet: {
+      frames: {
+        start: 0,
+        end: 8,
+        rate: 10,
+      },
+      width: 20,
+      height: 22,
     },
   },
   {
-    id: "cloud",
-    x: 850,
+    id: "godlevel",
+    x: 860,
     y: 500,
-    name: "Cloud",
+    name: "Godlevel",
     isAnimated: true,
-    spritesheet: "assets/npc/Cloud.png",
+    spritesheet: "assets/npc/Godlevel.png",
+    sheet: {
+      frames: {
+        start: 0,
+        end: 8,
+        rate: 10,
+      },
+      width: 20,
+      height: 22,
+    },
+  },
+  {
+    id: "pedro",
+    x: 880,
+    y: 500,
+    name: "Pedro",
+    isAnimated: true,
+    spritesheet: "assets/npc/Pedro.png",
+    sheet: {
+      frames: {
+        start: 0,
+        end: 8,
+        rate: 10,
+      },
+      width: 20,
+      height: 22,
+    },
+  },
+
+  // ===================== CUSTOM NPCS =====================
+
+  {
+    id: "granty",
+    x: 790,
+    y: 500,
+    name: "GranTY",
+    isAnimated: true,
+    spritesheet: "assets/npc/Granty.png",
     sheet: {
       frames: {
         start: 0,
@@ -289,7 +327,7 @@ export const CustomNPCs: CustomNPC[] = [
   },
   {
     id: "aeon",
-    x: 890,
+    x: 910,
     y: 500,
     name: "Aeon",
     isAnimated: true,

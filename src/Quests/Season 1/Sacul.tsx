@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { SpeakingModal } from "../../Components/SpeakingModal";
+import { notificationManager } from "../../Components/Notification";
 
 interface Props {
   onClose: () => void;
@@ -40,6 +41,12 @@ export const QuestSacul: React.FC<Props> = ({ onClose, scene }) => {
                   cb: () => {
                     setStep(1);
                     scene.sendQuestUpdate("season_1", "sacul", "found");
+                    notificationManager.notification({
+                      title: "Congratulations!",
+                      description:
+                        "You've found an exclusive Project Dignity hoodie!",
+                      icon: "ProjectDignityHoodie",
+                    });
                     onClose();
                   },
                 },

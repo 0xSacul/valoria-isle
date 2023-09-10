@@ -287,4 +287,40 @@ export const CustomObjects: CustomObject[] = [
       questModalManager.open("SecretPath");
     },
   },
+  {
+    id: "arcadian_mechanism",
+    x: 780,
+    y: 350,
+    spritesheet: "assets/objects/ArcadianMechanism.png",
+    isAnimated: false,
+    sheet: {
+      width: 32,
+      height: 34,
+    },
+    noCollision: true,
+    interactable: true,
+    onClick: () => {
+      console.log("Arcadian Mechanism");
+    },
+  },
+
+  // ----------------------------------- MAP Animations -----------------------------------
+
+  {
+    id: "waterfall",
+    x: 568,
+    y: 400,
+    spritesheet: "assets/objects/WaterFall.png",
+    isAnimated: true,
+    sheet: {
+      width: 112,
+      height: 64,
+      frames: {
+        start: 0,
+        end: 9,
+        rate: 10,
+      },
+    },
+    noCollision: true,
+  },
 ];

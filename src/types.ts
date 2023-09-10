@@ -46,12 +46,14 @@ export type DatabaseData = {
   wallet: string;
   farm: string;
   quests: {
-    sacul?: string;
-    tiff?: string;
-    secret_path?: string;
-    pyrari?: string;
-    lysari?: string;
-    veyari?: string;
+    season_1: {
+      sacul?: string;
+      tiff?: string;
+      secret_path?: string;
+      pyrari?: string;
+      lysari?: string;
+      veyari?: string;
+    };
   };
   assets: Array<any>;
 };

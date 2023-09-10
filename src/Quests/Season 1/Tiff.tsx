@@ -1,6 +1,15 @@
 import React, { useEffect, useState } from "react";
+import { Panel } from "../../Components/Panel";
 import { SpeakingModal } from "../../Components/SpeakingModal";
 import { CommunityAPI } from "../../Scene";
+
+const REPO_URL = "https://sacul.cloud/pd-preview/"; //"https://0xsacul.github.io/valoria-isle/";
+
+const NauticalGear = REPO_URL + "assets/components/NauticalGear.png";
+const ForestGem = REPO_URL + "assets/components/ForestGem.png";
+const Cog = REPO_URL + "assets/components/Cog.png";
+const MagicalRune = REPO_URL + "assets/components/MagicalRune.png";
+const ArcadianMechanism = REPO_URL + "assets/objects/ArcadianMechanism.png";
 
 interface Props {
   onClose: () => void;
@@ -9,6 +18,13 @@ interface Props {
 export const QuestTiff: React.FC<Props> = ({ onClose, scene }) => {
   const [step, setStep] = useState<number>(0);
   const [canBurn, setCanBurn] = useState<boolean>(false);
+
+  const [hasCog, setHasCog] = useState<boolean>(false);
+  const [hasForestGem, setHasForestGem] = useState<boolean>(false);
+  const [hasNauticalGear, setHasNauticalGear] = useState<boolean>(false);
+  const [hasMagicalRune, setHasMagicalRune] = useState<boolean>(false);
+  const [hasArcadianMechanism, setHasArcadianMechanism] =
+    useState<boolean>(false);
 
   const playerInventory = CommunityAPI.game.inventory;
 
@@ -25,6 +41,15 @@ export const QuestTiff: React.FC<Props> = ({ onClose, scene }) => {
     if (carrots >= 100 && potatoes >= 100 && cabbages >= 30) {
       setCanBurn(true);
     }
+
+    // ---------
+
+    setStep(7);
+    if (player_quests.lysari === "done") setHasNauticalGear(true);
+    if (player_quests.veyari === "done") setHasForestGem(true);
+    if (player_quests.pyrari === "done") setHasCog(true);
+    if (player_quests.aerari === "done") setHasMagicalRune(true);
+    if (player_quests.final === "done") setHasArcadianMechanism(true);
   }, []);
 
   const handleQuestComplete = async () => {
@@ -46,7 +71,7 @@ export const QuestTiff: React.FC<Props> = ({ onClose, scene }) => {
         },
       });
       scene.sendQuestUpdate("season_1", "tiff", "done");
-      setStep(7);
+      setStep(6.3);
     } catch (e) {
       console.error(e);
       setStep(6.2);
@@ -248,6 +273,18 @@ export const QuestTiff: React.FC<Props> = ({ onClose, scene }) => {
           ]}
         />
       )}
+      {step === 6.3 && (
+        <SpeakingModal
+          onClose={() => {
+            onClose();
+          }}
+          message={[
+            {
+              text: "Thank you for the food items! I'll distribute them to the other envoys.",
+            },
+          ]}
+        />
+      )}
       {step === 7 && (
         <SpeakingModal
           onClose={() => {
@@ -255,31 +292,53 @@ export const QuestTiff: React.FC<Props> = ({ onClose, scene }) => {
           }}
           message={[
             {
-              text: "Thank you for the food items! I'll distribute them to the other envoys. Now, let's talk about our mission here.",
-              actionTitle: "Tell me more about...",
+              text: "Hello Traveler! I'm glad you're still here, let me know if you need anything.",
               actions: [
                 {
-                  text: "Lysari",
-                  cb: () => setStep(7.1),
+                  text: "Tell me more about our mission here.",
+                  cb: () => setStep(8),
                 },
                 {
-                  text: "Veyari",
-                  cb: () => setStep(7.2),
-                },
-                {
-                  text: "Pyrari",
-                  cb: () => setStep(7.3),
-                },
-                {
-                  text: "Aerari",
-                  cb: () => setStep(7.4),
+                  text: "Show me my progress.",
+                  cb: () => setStep(9),
                 },
               ],
             },
           ]}
         />
       )}
-      {step === 7.1 && (
+      {step === 8 && (
+        <SpeakingModal
+          onClose={() => {
+            onClose();
+          }}
+          message={[
+            {
+              text: "Alright, let's talk about our mission here!",
+              actionTitle: "Tell me more about...",
+              actions: [
+                {
+                  text: "Lysari",
+                  cb: () => setStep(8.1),
+                },
+                {
+                  text: "Veyari",
+                  cb: () => setStep(8.2),
+                },
+                {
+                  text: "Pyrari",
+                  cb: () => setStep(8.3),
+                },
+                {
+                  text: "Aerari",
+                  cb: () => setStep(8.4),
+                },
+              ],
+            },
+          ]}
+        />
+      )}
+      {step === 8.1 && (
         <SpeakingModal
           onClose={() => {
             onClose();
@@ -291,22 +350,22 @@ export const QuestTiff: React.FC<Props> = ({ onClose, scene }) => {
               actions: [
                 {
                   text: "Veyari",
-                  cb: () => setStep(7.2),
+                  cb: () => setStep(8.2),
                 },
                 {
                   text: "Pyrari",
-                  cb: () => setStep(7.3),
+                  cb: () => setStep(8.3),
                 },
                 {
                   text: "Aerari",
-                  cb: () => setStep(7.4),
+                  cb: () => setStep(8.4),
                 },
               ],
             },
           ]}
         />
       )}
-      {step === 7.2 && (
+      {step === 8.2 && (
         <SpeakingModal
           onClose={() => {
             onClose();
@@ -318,22 +377,22 @@ export const QuestTiff: React.FC<Props> = ({ onClose, scene }) => {
               actions: [
                 {
                   text: "Lysari",
-                  cb: () => setStep(7.1),
+                  cb: () => setStep(8.1),
                 },
                 {
                   text: "Pyrari",
-                  cb: () => setStep(7.3),
+                  cb: () => setStep(8.3),
                 },
                 {
                   text: "Aerari",
-                  cb: () => setStep(7.4),
+                  cb: () => setStep(8.4),
                 },
               ],
             },
           ]}
         />
       )}
-      {step === 7.3 && (
+      {step === 8.3 && (
         <SpeakingModal
           onClose={() => {
             onClose();
@@ -345,22 +404,22 @@ export const QuestTiff: React.FC<Props> = ({ onClose, scene }) => {
               actions: [
                 {
                   text: "Lysari",
-                  cb: () => setStep(7.1),
+                  cb: () => setStep(8.1),
                 },
                 {
                   text: "Veyari",
-                  cb: () => setStep(7.2),
+                  cb: () => setStep(8.2),
                 },
                 {
                   text: "Aerari",
-                  cb: () => setStep(7.4),
+                  cb: () => setStep(8.4),
                 },
               ],
             },
           ]}
         />
       )}
-      {step === 7.4 && (
+      {step === 8.4 && (
         <SpeakingModal
           onClose={() => {
             onClose();
@@ -372,20 +431,121 @@ export const QuestTiff: React.FC<Props> = ({ onClose, scene }) => {
               actions: [
                 {
                   text: "Lysari",
-                  cb: () => setStep(7.1),
+                  cb: () => setStep(8.1),
                 },
                 {
                   text: "Veyari",
-                  cb: () => setStep(7.2),
+                  cb: () => setStep(8.2),
                 },
                 {
                   text: "Pyrari",
-                  cb: () => setStep(7.3),
+                  cb: () => setStep(8.3),
                 },
               ],
             },
           ]}
         />
+      )}
+      {step === 9 && (
+        <Panel>
+          <div className="flex flex-col items-center justify-center text-center">
+            <h1 className="text-xl">Quest Progress</h1>
+            <span className="text-xxs mb-2">
+              You have completed the following quests:
+            </span>
+            <div className="flex flex-col items-center justify-center w-full mt-4 mb-2 gap-2">
+              <div
+                className={`flex flex-row items-center justify-between w-full ${
+                  hasNauticalGear ? "" : "opacity-50"
+                }`}
+              >
+                <div className="flex flex-col ml-2 text-left">
+                  <div className="text-lg">Nautical Gear</div>
+                  <div className="text-xxs">
+                    {hasNauticalGear
+                      ? "Acquired from Lysari Tribe"
+                      : "Not yet acquired"}
+                  </div>
+                </div>
+                <img
+                  src={NauticalGear}
+                  alt="Nautical Gear"
+                  className="w-12 mr-1 ml-2"
+                />
+              </div>
+              <div
+                className={`flex flex-row items-center justify-between w-full ${
+                  hasForestGem ? "" : "opacity-50"
+                }`}
+              >
+                <div className="flex flex-col ml-2 text-left">
+                  <div className="text-lg">Forest Gem</div>
+                  <div className="text-xxs">
+                    {hasForestGem
+                      ? "Acquired from Veyari Tribe"
+                      : "Not yet acquired"}
+                  </div>
+                </div>
+                <img
+                  src={ForestGem}
+                  alt="Forest Gem"
+                  className="w-12 mr-1 ml-2"
+                />
+              </div>
+              <div
+                className={`flex flex-row items-center justify-between w-full ${
+                  hasCog ? "" : "opacity-50"
+                }`}
+              >
+                <div className="flex flex-col ml-2 text-left">
+                  <div className="text-lg">Cog</div>
+                  <div className="text-xxs">
+                    {hasCog ? "Acquired from Pyrari Tribe" : "Not yet acquired"}
+                  </div>
+                </div>
+                <img src={Cog} alt="Cog" className="w-12 mr-1 ml-2" />
+              </div>
+              <div
+                className={`flex flex-row items-center justify-between w-full ${
+                  hasMagicalRune ? "" : "opacity-50"
+                }`}
+              >
+                <div className="flex flex-col ml-2 text-left">
+                  <div className="text-lg">Magical Rune</div>
+                  <div className="text-xxs">
+                    {hasMagicalRune
+                      ? "Acquired from Aerari Tribe"
+                      : "Not yet acquired"}
+                  </div>
+                </div>
+                <img
+                  src={MagicalRune}
+                  alt="Magical Rune"
+                  className="w-12 mr-1 ml-2"
+                />
+              </div>
+              <div
+                className={`flex flex-row items-center justify-between w-full ${
+                  hasArcadianMechanism ? "" : "opacity-50"
+                }`}
+              >
+                <div className="flex flex-col ml-2 text-left">
+                  <div className="text-lg">Arcadian Mechanism</div>
+                  <div className="text-xxs">
+                    {hasArcadianMechanism
+                      ? "Mechanism Completed"
+                      : "Not yet completed"}
+                  </div>
+                </div>
+                <img
+                  src={ArcadianMechanism}
+                  alt="Arcadian Mechanism"
+                  className="w-12 mr-1 ml-2"
+                />
+              </div>
+            </div>
+          </div>
+        </Panel>
       )}
     </>
   );
