@@ -53,6 +53,7 @@ export type DatabaseData = {
       pyrari?: string;
       lysari?: string;
       veyari?: string;
+      final?: string;
     };
   };
   assets: Array<any>;

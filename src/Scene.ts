@@ -32,8 +32,10 @@ export default class ExternalScene extends window.BaseScene {
       },
       player: {
         spawn: {
-          x: 567,
-          y: 770,
+          x: 583.5,
+          y: 140,
+          /* x: 780,
+          y: 400, */
           /* x: 350,
           y: 483, */
         },
@@ -52,28 +54,42 @@ export default class ExternalScene extends window.BaseScene {
 
     CustomNPCs.forEach((npc: CustomNPC) => {
       if (npc.isAnimated) {
-        this.load.spritesheet(npc.id + "NPC", REPO_URL + npc.spritesheet, {
-          frameWidth: npc.sheet.width,
-          frameHeight: npc.sheet.height,
-        });
+        this.load.spritesheet(
+          npc.id + "NPC",
+          REPO_URL + npc.spritesheet + `?v=${Date.now()}`,
+          {
+            frameWidth: npc.sheet.width,
+            frameHeight: npc.sheet.height,
+          }
+        );
       } else {
-        this.load.image(npc.id + "NPC", REPO_URL + npc.spritesheet);
+        this.load.image(
+          npc.id + "NPC",
+          REPO_URL + npc.spritesheet + `?v=${Date.now()}`
+        );
       }
     });
 
     CustomObjects.forEach((obj: CustomObject) => {
       if (obj.isAnimated) {
-        this.load.spritesheet(obj.id + "Object", REPO_URL + obj.spritesheet, {
-          frameWidth: obj.sheet.width,
-          frameHeight: obj.sheet.height,
-        });
+        this.load.spritesheet(
+          obj.id + "Object",
+          REPO_URL + obj.spritesheet + `?v=${Date.now()}`,
+          {
+            frameWidth: obj.sheet.width,
+            frameHeight: obj.sheet.height,
+          }
+        );
       } else {
-        this.load.image(obj.id + "Object", REPO_URL + obj.spritesheet);
+        this.load.image(
+          obj.id + "Object",
+          REPO_URL + obj.spritesheet + `?v=${Date.now()}`
+        );
       }
     });
 
     CustomAudios.forEach((audio: CustomAudio) => {
-      this.load.audio(audio.id, REPO_URL + audio.url);
+      this.load.audio(audio.id, REPO_URL + audio.url + `?v=${Date.now()}`);
     });
   }
 
@@ -208,11 +224,11 @@ export default class ExternalScene extends window.BaseScene {
             end: obj.sheet.frames?.end,
           }),
           frameRate: obj.sheet.frames?.rate,
-          repeat: -1,
+          repeat: obj.sheet.loop ? -1 : 0,
         });
       }
 
-      if (!obj.hideByDefault) {
+      if (!obj.hideByDefault && !obj.idle) {
         custom_obj.play(obj.id + "_anim", true);
       }
     }
@@ -335,11 +351,20 @@ export default class ExternalScene extends window.BaseScene {
   }
 
   updateUserMapSettings(db_data: DatabaseData) {
-    if (!db_data.quests.season_1.secret_path) {
-      /* const red_mushroom = this.children.getByName(
-        "secret_path_red_mushroomObject"
-      ) as Phaser.GameObjects.Sprite; */
+    if (db_data.quests.season_1.final !== "done") {
+      const end_quest_chest = this.children.getByName(
+        "end_quest_chestObject"
+      ) as Phaser.GameObjects.Sprite;
+      end_quest_chest.anims.play("end_quest_chest_anim", true);
+    } else {
+      const end_quest_chest = this.children.getByName(
+        "end_quest_chestObject"
+      ) as Phaser.GameObjects.Sprite;
+      end_quest_chest.anims.stop();
+      end_quest_chest.setFrame(0);
+    }
 
+    if (!db_data.quests.season_1.secret_path) {
       const collision_box = this.add.rectangle(275, 500, 100, 100, 0x000000, 0);
       collision_box.name = "secret_path_collision_box";
       this.physics.add.existing(collision_box, true);
@@ -410,6 +435,75 @@ export default class ExternalScene extends window.BaseScene {
       if (not_found_tree) not_found_tree.destroy();
       if (not_found_tree_2) not_found_tree_2.destroy();
     }
+  }
+
+  Season1EndQuestAnimation() {
+    const arcadian_mechanism = this.children.getByName(
+      "arcadian_mechanismObject"
+    ) as Phaser.GameObjects.Sprite;
+    const arcadian_mechanism_cloud = this.children.getByName(
+      "arcadian_mechanism_cloudObject"
+    ) as Phaser.GameObjects.Sprite;
+
+    // Prevent Movements and Teleport Player on Cloud
+    this.input.keyboard.enabled = false;
+    this.currentPlayer.x = 780;
+    this.currentPlayer.y = 370;
+
+    arcadian_mechanism.play("arcadian_mechanism_anim", true);
+    arcadian_mechanism.once("animationcomplete", () => {
+      arcadian_mechanism_cloud.setVisible(true);
+      arcadian_mechanism.setFrame(0);
+      arcadian_mechanism.stop();
+
+      uiManager.dialogue("What is.. Oh my.. Travaler you're flying!");
+
+      this.tweens.add({
+        targets: [arcadian_mechanism_cloud],
+        x: 585,
+        y: 200,
+        duration: 7500,
+        ease: "Power3",
+        onComplete: () => {
+          uiManager.dialogue("");
+          this.input.keyboard.enabled = true;
+
+          this.tweens.add({
+            targets: arcadian_mechanism_cloud,
+            alpha: 0,
+            duration: 2000,
+            ease: "Linear",
+            onComplete: () => {
+              arcadian_mechanism_cloud.setVisible(false);
+              arcadian_mechanism_cloud.setAlpha(1);
+            },
+          });
+        },
+      });
+
+      this.tweens.add({
+        targets: [this.currentPlayer],
+        x: 585,
+        y: 185,
+        duration: 7500,
+        ease: "Power3",
+      });
+    });
+  }
+
+  sendPlayerToSpawn() {
+    uiManager.dialogue("");
+    this.cameras.main.fadeOut(1000, 0, 0, 0);
+    this.cameras.main.once(
+      Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE,
+      () => {
+        this.currentPlayer.x = 567;
+        this.currentPlayer.y = 770;
+        setTimeout(() => {
+          this.cameras.main.fadeIn(1000, 0, 0, 0);
+        }, 1000);
+      }
+    );
   }
 }
 

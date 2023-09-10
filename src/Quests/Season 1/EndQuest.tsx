@@ -13,7 +13,7 @@ export const QuestFinal: React.FC<Props> = ({ onClose, scene }) => {
   useEffect(() => {
     const player_quests = scene.currentPlayer.db_data.quests.season_1 || {};
 
-    if (player_quests.tiff !== "done") {
+    /* if (player_quests.tiff !== "done") {
       setStep(0.1);
       return;
     }
@@ -21,7 +21,7 @@ export const QuestFinal: React.FC<Props> = ({ onClose, scene }) => {
     if (player_quests.final !== "done") {
       setStep(0);
     } else {
-      setStep(3.1);
+      setStep(2.1);
     }
 
     if (
@@ -31,7 +31,10 @@ export const QuestFinal: React.FC<Props> = ({ onClose, scene }) => {
       player_quests.aerari === "done"
     ) {
       setCanCompleteQuest(true);
-    }
+    } */
+
+    setCanCompleteQuest(true);
+    setStep(2);
   }, []);
 
   return (
@@ -135,6 +138,7 @@ export const QuestFinal: React.FC<Props> = ({ onClose, scene }) => {
               actions: [
                 {
                   text: "Place the components",
+                  disabled: !canCompleteQuest,
                   cb: () => {
                     scene.Season1EndQuestAnimation();
                     onClose();

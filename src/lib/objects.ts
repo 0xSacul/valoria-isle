@@ -14,8 +14,10 @@ export type CustomObject = {
     };
     width: number;
     height: number;
+    loop?: boolean;
   };
   isAnimated: boolean;
+  idle?: boolean;
   onClick?: () => void;
   modal?: {
     type: string;
@@ -47,6 +49,7 @@ export const CustomObjects: CustomObject[] = [
       },
       width: 32,
       height: 32,
+      loop: true,
     },
     noCollision: true,
   },
@@ -93,6 +96,7 @@ export const CustomObjects: CustomObject[] = [
       },
       width: 24,
       height: 19,
+      loop: true,
     },
     noCollision: true,
   },
@@ -183,6 +187,7 @@ export const CustomObjects: CustomObject[] = [
         end: 17,
         rate: 10,
       },
+      loop: true,
     },
     noCollision: true,
   },
@@ -201,6 +206,7 @@ export const CustomObjects: CustomObject[] = [
         end: 17,
         rate: 10,
       },
+      loop: true,
     },
     noCollision: true,
   },
@@ -222,6 +228,7 @@ export const CustomObjects: CustomObject[] = [
         end: 76,
         rate: 10,
       },
+      loop: true,
     },
     noCollision: true,
   },
@@ -241,6 +248,7 @@ export const CustomObjects: CustomObject[] = [
         end: 76,
         rate: 10,
       },
+      loop: true,
     },
     noCollision: true,
   },
@@ -292,16 +300,90 @@ export const CustomObjects: CustomObject[] = [
     x: 780,
     y: 350,
     spritesheet: "assets/objects/ArcadianMechanism.png",
+    isAnimated: true,
+    idle: true,
+    sheet: {
+      width: 55,
+      height: 97,
+      frames: {
+        start: 0,
+        end: 54,
+        rate: 10,
+      },
+      loop: false,
+    },
+    noCollision: true,
+  },
+  {
+    id: "arcadian_mechanism_cloud",
+    x: 780,
+    y: 383,
+    spritesheet: "assets/objects/Cloud.png",
     isAnimated: false,
     sheet: {
-      width: 32,
-      height: 34,
+      width: 48,
+      height: 48,
+    },
+    noCollision: true,
+    hideByDefault: true,
+  },
+  {
+    id: "end_quest_chest",
+    x: 583.5,
+    y: 102,
+    spritesheet: "assets/objects/OpenMeChest.png",
+    isAnimated: true,
+    idle: true,
+    sheet: {
+      width: 19,
+      height: 18,
+      frames: {
+        start: 0,
+        end: 29,
+        rate: 10,
+      },
+      loop: true,
     },
     noCollision: true,
     interactable: true,
     onClick: () => {
-      console.log("Arcadian Mechanism");
+      uiManager.playCutscene();
     },
+  },
+  {
+    id: "end_quest_cart",
+    x: 615,
+    y: 83,
+    spritesheet: "assets/objects/Cart.png",
+    isAnimated: false,
+    sheet: {
+      width: 16,
+      height: 18,
+    },
+    noCollision: true,
+    interactable: true,
+    onClick: () => {
+      uiManager.backToSpawn();
+    },
+  },
+  {
+    id: "end_quest_cart_arrow",
+    x: 615,
+    y: 65,
+    spritesheet: "assets/icons/FloatingArrow.png",
+    isAnimated: true,
+    sheet: {
+      width: 13,
+      height: 24,
+      frames: {
+        start: 0,
+        end: 16,
+        rate: 10,
+      },
+      loop: true,
+    },
+    noCollision: true,
+    hideByDefault: true,
   },
 
   // ----------------------------------- MAP Animations -----------------------------------
@@ -320,6 +402,7 @@ export const CustomObjects: CustomObject[] = [
         end: 9,
         rate: 10,
       },
+      loop: true,
     },
     noCollision: true,
   },

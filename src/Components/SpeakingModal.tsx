@@ -27,6 +27,7 @@ interface Props {
   message: Message[];
   preventClose?: boolean;
   trail?: number;
+  hideContinue?: boolean;
 }
 
 /**
@@ -40,6 +41,7 @@ export const SpeakingModal: React.FC<Props> = ({
   message,
   preventClose,
   trail,
+  hideContinue,
 }) => {
   const [currentMessage, setCurrentMessage] = useState(0);
   const [currentTextEnded, setCurrentTextEnded] = useState(false);
@@ -110,7 +112,7 @@ export const SpeakingModal: React.FC<Props> = ({
     message[currentMessage].actions;
   return (
     <Panel className={classNames("relative w-full", className)}>
-      <div style={{ minHeight: `${lines * 25}px` }} className="flex flex-col">
+      <div style={{ minHeight: `${lines * 10}px` }} className="flex flex-col">
         <div
           className={classNames("flex-1 p-1 flex flex-col  mb-1", {
             "cursor-pointer": !currentTextEnded || !showActions,
@@ -126,7 +128,7 @@ export const SpeakingModal: React.FC<Props> = ({
           />
           {currentTextEnded && message[currentMessage].jsx}
         </div>
-        {!showActions && (
+        {!showActions && !hideContinue && (
           <p className="text-xxs italic float-right p-1">(Tap to continue)</p>
         )}
         {showActions && message[currentMessage].requirements && (
