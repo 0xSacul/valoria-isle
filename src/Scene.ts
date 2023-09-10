@@ -13,11 +13,11 @@ import { CustomObject, CustomObjects } from "./lib/objects";
 import { CustomAudio, CustomAudios } from "./lib/audio";
 
 // Repo URL
-const REPO_URL = "https://sacul.cloud/pd-preview/"; //"https://0xsacul.github.io/projectdignity-community-island/";
+export const REPO_URL = "https://sacul.cloud/pd-preview/"; //"https://0xsacul.github.io/valoria-isle/";
 
 // Community API
 export const CommunityAPI = new window.CommunityAPI({
-  id: "projectdignity",
+  id: "valoria-isle",
   apiKey: "b96ee2b5-f1e9-41e2-a54a-9cbd6d624d48",
 });
 
@@ -50,7 +50,7 @@ export default class ExternalScene extends window.BaseScene {
   preload() {
     super.preload();
 
-    CustomNPCs.forEach((npc) => {
+    CustomNPCs.forEach((npc: CustomNPC) => {
       if (npc.isAnimated) {
         this.load.spritesheet(npc.id + "NPC", REPO_URL + npc.spritesheet, {
           frameWidth: npc.sheet.width,
@@ -61,7 +61,7 @@ export default class ExternalScene extends window.BaseScene {
       }
     });
 
-    CustomObjects.forEach((obj) => {
+    CustomObjects.forEach((obj: CustomObject) => {
       if (obj.isAnimated) {
         this.load.spritesheet(obj.id + "Object", REPO_URL + obj.spritesheet, {
           frameWidth: obj.sheet.width,
@@ -72,7 +72,7 @@ export default class ExternalScene extends window.BaseScene {
       }
     });
 
-    CustomAudios.forEach((audio) => {
+    CustomAudios.forEach((audio: CustomAudio) => {
       this.load.audio(audio.id, REPO_URL + audio.url);
     });
   }
@@ -83,16 +83,6 @@ export default class ExternalScene extends window.BaseScene {
     window.openModal({
       type: "loading",
     });
-
-    // For local testing, allow Scene refresh with spacebar
-    /* this.events.on("shutdown", () => {
-      this.cache.tilemap.remove("local");
-      this.scene.remove("local");
-    });
-    const spaceBar = this.input.keyboard.addKey("SPACE");
-    spaceBar.on("down", () => {
-      this.scene.start("default");
-    }); */
 
     ReactDOM.render(
       React.createElement(UI, { scene: this }),
@@ -106,10 +96,6 @@ export default class ExternalScene extends window.BaseScene {
     CustomObjects.forEach((obj) => {
       this.PlaceCustomObject(obj);
     });
-
-    /* await new Promise((resolve) => setTimeout(resolve, 2500)).then(() => {
-      uiManager.playCutscene();
-    }); */
 
     const ambient = this.sound.add("ambient");
     ambient.setLoop(true);
@@ -288,14 +274,23 @@ export default class ExternalScene extends window.BaseScene {
     this.updateUserMapSettings(db_data);
   }
 
-  sendQuestUpdate(quest: string, value: string) {
-    const current_quests = this.currentPlayer.db_data.quests;
+  sendQuestUpdate(season: string, quest: string, value: string) {
+    switch (season) {
+      case "season_1":
+        const current_quests = this.currentPlayer.db_data.quests;
 
-    if (current_quests[quest] === value) return;
+        if (current_quests[season][quest] === value) return;
 
-    current_quests[quest] = value;
+        current_quests[season][quest] = value;
 
-    this.mmoService.state.context.server?.send("quest_event", current_quests);
+        this.mmoService.state.context.server?.send(
+          "quest_event",
+          current_quests
+        );
+        break;
+      default:
+        break;
+    }
   }
 
   CheckPlayerDistance(x: number, y: number) {
@@ -393,7 +388,7 @@ export default class ExternalScene extends window.BaseScene {
         ) as Phaser.GameObjects.Rectangle;
         collision_box.destroy();
 
-        this.sendQuestUpdate("secret_path", "done");
+        this.sendQuestUpdate("season_1", "secret_path", "done");
       }, 15000);
     } else if (db_data.quests.secret_path === "done") {
       const not_found_tree = this.children.getByName(

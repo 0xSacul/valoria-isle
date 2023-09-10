@@ -9,7 +9,7 @@ export const QuestSecretPath: React.FC<Props> = ({ onClose, scene }) => {
   const [step, setStep] = useState<number>(0);
 
   useEffect(() => {
-    const player_quests = scene.currentPlayer.db_data.quests || {};
+    const player_quests = scene.currentPlayer.db_data.quests.season_1 || {};
 
     if (player_quests.tiff !== "done") {
       return onClose();
@@ -41,7 +41,7 @@ export const QuestSecretPath: React.FC<Props> = ({ onClose, scene }) => {
                   text: "Yes, show me the way",
                   cb: () => {
                     setStep(1);
-                    scene.sendQuestUpdate("secret_path", "found");
+                    scene.sendQuestUpdate("season_1", "secret_path", "found");
                   },
                 },
                 {

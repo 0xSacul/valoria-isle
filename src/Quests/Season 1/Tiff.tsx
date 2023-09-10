@@ -13,7 +13,7 @@ export const QuestTiff: React.FC<Props> = ({ onClose, scene }) => {
   const playerInventory = CommunityAPI.game.inventory;
 
   useEffect(() => {
-    const player_quests = scene.currentPlayer.db_data.quests || {};
+    const player_quests = scene.currentPlayer.db_data.quests.season_1 || {};
 
     if (player_quests.tiff === "waiting") setStep(6);
     if (player_quests.tiff === "done") setStep(7);
@@ -34,10 +34,8 @@ export const QuestTiff: React.FC<Props> = ({ onClose, scene }) => {
       await CommunityAPI.burn({
         metadata: JSON.stringify({
           quests: {
-            non_holder: {
-              tiff: {
-                done_at: Date.now(),
-              },
+            tiff: {
+              done_at: Date.now(),
             },
           },
         }),
@@ -47,7 +45,7 @@ export const QuestTiff: React.FC<Props> = ({ onClose, scene }) => {
           Cabbage: 30,
         },
       });
-      scene.sendQuestUpdate("tiff", "done");
+      scene.sendQuestUpdate("season_1", "tiff", "done");
       setStep(7);
     } catch (e) {
       console.error(e);
@@ -136,7 +134,7 @@ export const QuestTiff: React.FC<Props> = ({ onClose, scene }) => {
                   text: "Sure, I'll get right on it.",
                   cb: () => {
                     setStep(5);
-                    scene.sendQuestUpdate("tiff", "waiting");
+                    scene.sendQuestUpdate("season_1", "tiff", "waiting");
                   },
                 },
                 {
@@ -161,7 +159,7 @@ export const QuestTiff: React.FC<Props> = ({ onClose, scene }) => {
                   text: "Alright, I'll get the food.",
                   cb: () => {
                     setStep(5);
-                    scene.sendQuestUpdate("tiff", "waiting");
+                    scene.sendQuestUpdate("season_1", "tiff", "waiting");
                   },
                 },
                 {

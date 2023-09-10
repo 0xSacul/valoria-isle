@@ -1,4 +1,5 @@
 import { questModalManager } from "../Components/QuestModal";
+import { uiManager } from "../UI";
 
 export type CustomObject = {
   id: string;
@@ -93,6 +94,48 @@ export const CustomObjects: CustomObject[] = [
       width: 24,
       height: 19,
     },
+    noCollision: true,
+  },
+  {
+    id: "spawn_wooden_sign",
+    x: 600,
+    y: 730,
+    spritesheet: "assets/objects/WoodenSign.png",
+    isAnimated: false,
+    sheet: {
+      width: 16,
+      height: 15,
+    },
+    modal: {
+      type: "speaking",
+      messages: [
+        {
+          text: "Welcome on Valoria Island!",
+        },
+        {
+          text: "This is a community project, made by the community for the community.",
+        },
+        {
+          text: "Here at Project Dignity, we really wanted to create something that would be fun for everyone, and that would be a great way to introduce new players to the game.",
+        },
+        {
+          text: "The Island is a great place to start your adventure, and we hope you'll enjoy it! And don't forget to walk around and talk to people, you might find some interesting quests!",
+        },
+        {
+          text: "You'll also see that in our Island we keep some kind of roleplay, so don't take this sign as a part of our lore, it's just a way to introduce you to the Island!",
+        },
+        {
+          text: "Also, a huuuuge shoutout to the amazing team that worked on this project,",
+        },
+        {
+          text: "Sacul - Lead Developer & Project Manager, Ded - Game & Map Designer, Shykun - Animations & Art, Boden - Artist, Paluras - Artist",
+        },
+        {
+          text: "Much love, Dignity's Team.",
+        },
+      ],
+    },
+    interactable: true,
     noCollision: true,
   },
 

@@ -9,12 +9,12 @@ export const QuestSacul: React.FC<Props> = ({ onClose, scene }) => {
   const [step, setStep] = useState<number>(0);
 
   useEffect(() => {
-    const player_quests = scene.currentPlayer.db_data.quests || {};
+    const player_quests = scene.currentPlayer.db_data.quests.season_1 || {};
 
     if (player_quests.sacul === "found") setStep(1);
     if (player_quests.sacul === "onws") {
       setStep(2);
-      scene.sendQuestUpdate("sacul", "found");
+      scene.sendQuestUpdate("season_1", "sacul", "found");
     }
   }, []);
 
@@ -39,7 +39,7 @@ export const QuestSacul: React.FC<Props> = ({ onClose, scene }) => {
                   text: "Accept what he's giving you",
                   cb: () => {
                     setStep(1);
-                    scene.sendQuestUpdate("sacul", "found");
+                    scene.sendQuestUpdate("season_1", "sacul", "found");
                     onClose();
                   },
                 },

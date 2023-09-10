@@ -1,7 +1,7 @@
 {
-  "name": "projectdignity-community-island",
-  "description": "Project Dignity's Island for Sunflower Land.",
-  "version": "0.0.0",
+  "name": "valoria-isle",
+  "description": "Valoria Isle is a Sunflower Land Community Island made by Project Dignity.",
+  "version": "1.0.0",
   "scripts": {
     "build": "npm run clean && esbuild ./src/Scene.ts --bundle --minify --tsconfig=tsconfig.json --outfile=public/Scene.js",
     "dev": "npm run clean && esbuild ./src/Scene.ts --bundle --minify --watch --tsconfig=tsconfig.json --outfile=public/Scene.js",

@@ -1,7 +1,8 @@
 import React from "react";
 
-const VIDEO =
-  "https://0xsacul.github.io/projectdignity-community-island/assets/video/SpellCutscene.mp4";
+import { REPO_URL } from "../Scene";
+
+const VIDEO = REPO_URL + "assets/video/SpellCutscene.mp4";
 
 export const CutScene: React.FC = () => {
   return (

@@ -262,10 +262,13 @@ export const CustomNPCs: CustomNPC[] = [
       type: "speaking",
       messages: [
         {
-          text: "Howdy farmer, I'm Boden! I'm an artist at Project Dignity. Welcome to our Island fellow farmer!",
+          text: "Howdy unknown traveler, I'm Boden, welcome on our island!",
         },
         {
-          text: "This Island is pretty big, would you like to have a quick look around? Or you can also come and check us out!",
+          text: "I'm just a simple villager, if you need help you should talk to Tiff!",
+        },
+        {
+          text: "But since you seems friendly, I can show you around if you want! Our Island is pretty big and you can get lost easily!",
           actions: [
             {
               text: "Sure! Show me around!",
@@ -274,9 +277,8 @@ export const CustomNPCs: CustomNPC[] = [
               },
             },
             {
-              text: "Visit Project Dignity",
+              text: "No thanks, I'll find my own way.",
               cb: () => {
-                window.open("https://dignity-games.com/", "_blank");
                 window.closeModal();
               },
             },

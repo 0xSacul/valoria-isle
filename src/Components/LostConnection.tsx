@@ -2,8 +2,9 @@ import React from "react";
 import { Modal } from "react-bootstrap";
 import { Panel } from "./Panel";
 
-const HumanDeath =
-  "https://0xsacul.github.io/projectdignity-community-island/assets/other/HumanDeath.gif";
+import { REPO_URL } from "../Scene";
+
+const HumanDeath = REPO_URL + "assets/other/HumanDeath.gif";
 
 export const LostConnection: React.FC = () => {
   return (

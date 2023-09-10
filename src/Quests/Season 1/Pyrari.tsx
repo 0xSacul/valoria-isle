@@ -13,7 +13,7 @@ export const QuestPyrari: React.FC<Props> = ({ onClose, scene }) => {
   const playerInventory = CommunityAPI.game.inventory;
 
   useEffect(() => {
-    const player_quests = scene.currentPlayer.db_data.quests || {};
+    const player_quests = scene.currentPlayer.db_data.quests.season_1 || {};
 
     if (player_quests.tiff !== "done") {
       setStep(0.1);
@@ -38,10 +38,8 @@ export const QuestPyrari: React.FC<Props> = ({ onClose, scene }) => {
       await CommunityAPI.burn({
         metadata: JSON.stringify({
           quests: {
-            non_holder: {
-              pyrari: {
-                done_at: Date.now(),
-              },
+            pyrari: {
+              done_at: Date.now(),
             },
           },
         }),
@@ -50,7 +48,7 @@ export const QuestPyrari: React.FC<Props> = ({ onClose, scene }) => {
           Stone: 50,
         },
       });
-      scene.sendQuestUpdate("pyrari", "done");
+      scene.sendQuestUpdate("season_1", "pyrari", "done");
       setStep(3);
     } catch (e) {
       console.error(e);
@@ -67,7 +65,7 @@ export const QuestPyrari: React.FC<Props> = ({ onClose, scene }) => {
           }}
           message={[
             {
-              text: "Greeting.. Wait who are you? Tiff usually tells me when we're expecting someone, maybe you should go talk to her first.",
+              text: "Greetings.. Wait who are you? Tiff usually tells me when we're expecting someone, maybe you should go talk to her first.",
             },
           ]}
         />
@@ -85,7 +83,7 @@ export const QuestPyrari: React.FC<Props> = ({ onClose, scene }) => {
                   text: "Sure, I'll get right on it.",
                   cb: () => {
                     setStep(1);
-                    scene.sendQuestUpdate("pyrari", "waiting");
+                    scene.sendQuestUpdate("season_1", "pyrari", "waiting");
                   },
                 },
                 {
