@@ -24,7 +24,7 @@ export const QuestAerari: React.FC<Props> = ({ onClose, scene }) => {
     if (player_quests.aerari === "waiting") setStep(2);
     if (player_quests.aerari === "done") setStep(3.1);
 
-    const blueberries = Number(playerInventory["Blueberries"] || 0);
+    const blueberries = Number(playerInventory["Blueberry"] || 0);
 
     if (blueberries >= 20) {
       setCanBurn(true);
@@ -44,7 +44,7 @@ export const QuestAerari: React.FC<Props> = ({ onClose, scene }) => {
           },
         }),
         items: {
-          Blueberries: 20,
+          Blueberry: 20,
         },
       });
       scene.sendQuestUpdate("season_1", "aerari", "done");
@@ -116,9 +116,9 @@ export const QuestAerari: React.FC<Props> = ({ onClose, scene }) => {
               text: "Ah, you're back! Do you have the blueberries?",
               requirements: [
                 {
-                  label: "Blueberries",
+                  label: "Blueberry",
                   value: 20,
-                  has: Number(playerInventory["Blueberries"] || 0) >= 20,
+                  has: Number(playerInventory["Blueberry"] || 0) >= 20,
                 },
               ],
               actions: [
