@@ -37,7 +37,7 @@ export default class ExternalScene extends window.BaseScene {
       },
       mmo: {
         enabled: true,
-        url: "ws://localhost:2567", //"wss://plaza.sacul.cloud",
+        url: "wss://plaza.sacul.cloud", //"ws://localhost:2567" ,
         roomId: "valoria",
         serverId: "valoria",
       },
@@ -158,7 +158,14 @@ export default class ExternalScene extends window.BaseScene {
         this.mmoService.state.context.server?.onMessage(
           "__playground_message_types",
           (data: string[]) => {
-            console.warn("[Valoria Isle] => Playground Message Types:", data);
+            // Fuck off stupid listener
+            /*
+
+              For builders who read this, add this too on your island
+              or somehow you island won't connect to your server for
+              some reason
+
+            */
           }
         );
     }
