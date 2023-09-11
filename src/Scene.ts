@@ -143,10 +143,6 @@ export default class ExternalScene extends window.BaseScene {
       this.questListener = this.mmoService.state.context.server?.onMessage(
         "quest_hoodie",
         (data: { [key: string]: number }) => {
-          console.warn(
-            "[Valoria Isle] => Secret Left Updated:",
-            data.hoodieLeft
-          );
           this.hoodieLeft = data.hoodieLeft as number | 0;
         }
       );
