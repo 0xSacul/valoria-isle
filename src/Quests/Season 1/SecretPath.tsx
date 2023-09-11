@@ -12,9 +12,9 @@ export const QuestSecretPath: React.FC<Props> = ({ onClose, scene }) => {
   useEffect(() => {
     const player_quests = scene.currentPlayer.db_data.quests.season_1 || {};
 
-    if (player_quests.tiff !== "done") {
+    /* if (player_quests.tiff !== "done") {
       return onClose();
-    }
+    } */
 
     if (
       player_quests.secret_path === "found" ||
@@ -42,7 +42,6 @@ export const QuestSecretPath: React.FC<Props> = ({ onClose, scene }) => {
                   text: "Yes, show me the way",
                   cb: () => {
                     setStep(1);
-                    scene.sendQuestUpdate("season_1", "secret_path", "found");
                   },
                 },
                 {
@@ -65,6 +64,7 @@ export const QuestSecretPath: React.FC<Props> = ({ onClose, scene }) => {
               description: "You've found the secret path!",
               icon: "Success",
             });
+            scene.sendQuestUpdate("season_1", "secret_path", "found");
             onClose();
           }}
           onTextChange={(text) => {

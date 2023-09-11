@@ -146,109 +146,21 @@ export const CustomObjects: CustomObject[] = [
   // -----------------------------------
 
   {
-    id: "secret_path_tree_1",
-    x: 280,
+    id: "secret_path_trees",
+    x: 296,
     y: 483,
-    spritesheet: "assets/objects/MediumTree.png",
-    isAnimated: false,
-    sheet: {
-      width: 18,
-      height: 35,
-    },
-    noCollision: true,
-  },
-  {
-    id: "secret_path_tree_2",
-    x: 310,
-    y: 483,
-    spritesheet: "assets/objects/MediumTree.png",
-    isAnimated: false,
-    sheet: {
-      width: 18,
-      height: 35,
-    },
-    noCollision: true,
-  },
-
-  // Sparkle Trees
-
-  {
-    hideByDefault: true,
-    id: "secret_path_sparklestree1",
-    x: 280,
-    y: 483,
-    spritesheet: "assets/objects/TreeSparkle.png",
+    spritesheet: "assets/objects/TreesFadeAway.png",
     isAnimated: true,
+    idle: true,
     sheet: {
-      width: 46,
-      height: 49,
+      width: 64,
+      height: 48,
       frames: {
-        start: 0,
-        end: 17,
+        start: 1,
+        end: 77,
         rate: 10,
       },
-      loop: true,
-    },
-    noCollision: true,
-  },
-  {
-    hideByDefault: true,
-    id: "secret_path_sparklestree2",
-    x: 310,
-    y: 483,
-    spritesheet: "assets/objects/TreeSparkle.png",
-    isAnimated: true,
-    sheet: {
-      width: 46,
-      height: 49,
-      frames: {
-        start: 0,
-        end: 17,
-        rate: 10,
-      },
-      loop: true,
-    },
-    noCollision: true,
-  },
-
-  // Fade Away Trees
-
-  {
-    hideByDefault: true,
-    id: "secret_path_fadeawaytree1",
-    x: 280,
-    y: 483,
-    spritesheet: "assets/objects/TreeFadeAway.png",
-    isAnimated: true,
-    sheet: {
-      width: 46,
-      height: 49,
-      frames: {
-        start: 0,
-        end: 76,
-        rate: 10,
-      },
-      loop: true,
-    },
-    noCollision: true,
-  },
-
-  {
-    hideByDefault: true,
-    id: "secret_path_fadeawaytree2",
-    x: 310,
-    y: 483,
-    spritesheet: "assets/objects/TreeFadeAway.png",
-    isAnimated: true,
-    sheet: {
-      width: 46,
-      height: 49,
-      frames: {
-        start: 0,
-        end: 76,
-        rate: 10,
-      },
-      loop: true,
+      loop: false,
     },
     noCollision: true,
   },

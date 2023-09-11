@@ -366,7 +366,7 @@ export default class ExternalScene extends window.BaseScene {
     });
   }
 
-  // Well umh this is a mess but it works - Need a rework later
+  // Well umh this is a mess but it works - Need a rework later - Rework done kek
   updateUserMapSettings(db_data: DatabaseData) {
     if (db_data.quests.season_1.final !== "done") {
       const end_quest_chest = this.children.getByName(
@@ -382,70 +382,38 @@ export default class ExternalScene extends window.BaseScene {
     }
 
     if (db_data.quests.season_1.secret_path === "found") {
-      const not_found_tree = this.children.getByName(
-        "secret_path_tree_1Object"
-      ) as Phaser.GameObjects.Sprite;
-      const not_found_tree_2 = this.children.getByName(
-        "secret_path_tree_2Object"
-      ) as Phaser.GameObjects.Sprite;
-      const sparkle_tree = this.children.getByName(
-        "secret_path_sparklestree1Object"
-      ) as Phaser.GameObjects.Sprite;
-      const sparkle_tree_2 = this.children.getByName(
-        "secret_path_sparklestree2Object"
-      ) as Phaser.GameObjects.Sprite;
-      const fade_away_tree = this.children.getByName(
-        "secret_path_fadeawaytree1Object"
-      ) as Phaser.GameObjects.Sprite;
-      const fade_away_tree_2 = this.children.getByName(
-        "secret_path_fadeawaytree2Object"
-      ) as Phaser.GameObjects.Sprite;
-
-      not_found_tree.setVisible(false);
-      not_found_tree_2.setVisible(false);
-      sparkle_tree.setVisible(true);
-      sparkle_tree_2.setVisible(true);
-      sparkle_tree.play("secret_path_sparklestree1_anim", true);
-      sparkle_tree_2.play("secret_path_sparklestree2_anim", true);
-
-      setTimeout(() => {
-        sparkle_tree.setVisible(false);
-        sparkle_tree_2.setVisible(false);
-        fade_away_tree.setVisible(true);
-        fade_away_tree_2.setVisible(true);
-        fade_away_tree.play("secret_path_fadeawaytree1_anim", true);
-        fade_away_tree_2.play("secret_path_fadeawaytree2_anim", true);
-      }, 10000);
-
-      setTimeout(() => {
-        not_found_tree.destroy();
-        not_found_tree_2.destroy();
-        sparkle_tree.destroy();
-        sparkle_tree_2.destroy();
-        fade_away_tree.destroy();
-        fade_away_tree_2.destroy();
-
-        const collision_box = this.children.getByName(
-          "secret_path_collision_box"
-        ) as Phaser.GameObjects.Rectangle;
-        if (collision_box) collision_box.destroy();
-
-        this.sendQuestUpdate("season_1", "secret_path", "done");
-      }, 15000);
-    } else if (db_data.quests.season_1.secret_path === "done") {
-      const not_found_tree = this.children.getByName(
-        "secret_path_tree_1Object"
-      ) as Phaser.GameObjects.Sprite;
-      const not_found_tree_2 = this.children.getByName(
-        "secret_path_tree_2Object"
-      ) as Phaser.GameObjects.Sprite;
       const collision_box = this.children.getByName(
         "secret_path_collision_box"
-      ) as Phaser.GameObjects.Rectangle;
+      ) as Phaser.GameObjects.Sprite;
+      const trees = this.children.getByName(
+        "secret_path_treesObject"
+      ) as Phaser.GameObjects.Sprite;
+      trees.play("secret_path_trees_anim", true);
 
-      if (collision_box) collision_box.destroy();
-      if (not_found_tree) not_found_tree.destroy();
-      if (not_found_tree_2) not_found_tree_2.destroy();
+      trees.once("animationcomplete", () => {
+        collision_box.x = 0; // In case somehow the box doesn't get destroyed
+        collision_box.y = 0;
+        collision_box.destroy();
+        trees.setVisible(false);
+        trees.destroy();
+
+        this.sendQuestUpdate("season_1", "secret_path", "done");
+      });
+    }
+
+    if (db_data.quests.season_1.secret_path === "done") {
+      const collision_box = this.children.getByName(
+        "secret_path_collision_box"
+      ) as Phaser.GameObjects.Sprite;
+      const trees = this.children.getByName(
+        "secret_path_treesObject"
+      ) as Phaser.GameObjects.Sprite;
+
+      collision_box.x = 0; // In case somehow the box doesn't get destroyed
+      collision_box.y = 0;
+      collision_box.destroy();
+      trees.setVisible(false);
+      trees.destroy();
     }
   }
 
