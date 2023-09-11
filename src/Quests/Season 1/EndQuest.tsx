@@ -57,7 +57,7 @@ export const QuestFinal: React.FC<Props> = ({ onClose, scene }) => {
               text: "Greetings, traveler. I am Envoy Dee, a special envoy from the Arcadian Reclaim. You see this intricate mechanism beside me? It's an ancient device that we believe is connected to the island's relic. I've been waiting for someone like you, someone who can unite the tribes and help us complete this mechanism. Have you completed the tasks for the four tribes?",
               actions: [
                 {
-                  text: "yes, I have gained the trust of all four tribes.",
+                  text: "Yes, I have gained the trust of all four tribes.",
                   cb: () => {
                     setStep(1);
                   },

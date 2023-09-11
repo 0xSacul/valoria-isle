@@ -8,6 +8,7 @@ import { Notifications, notificationManager } from "./Components/Notification";
 import { Dialogue } from "./Components/Dialogue";
 import { IsleIntroduction } from "./Components/IsleIntroduction";
 import { Banned } from "./Components/Banned";
+import { Loading } from "./Components/Loading";
 
 class UIManager {
   private listener?: (playCutscene: boolean) => void;
@@ -16,6 +17,7 @@ class UIManager {
   private dialogueListener?: (message: string, closeAfter?: number) => void;
   private isBannedListener?: () => void;
   private visitIslandListener?: () => void;
+  private loadingListener?: (loading: boolean) => void;
 
   public playCutscene() {
     if (this.listener) {
@@ -82,6 +84,16 @@ class UIManager {
       this.visitIslandListener();
     }
   }
+
+  public onLoading(cb: (loading: boolean) => void) {
+    this.loadingListener = cb;
+  }
+
+  public loading(loading: boolean) {
+    if (this.loadingListener) {
+      this.loadingListener(loading);
+    }
+  }
 }
 
 export const uiManager = new UIManager();
@@ -96,6 +108,7 @@ export const UI: React.FC<Props> = ({ scene }) => {
   const [dialogueMessage, setDialogueMessage] = useState<string>("");
   const [showIntroduction, setShowIntroduction] = useState<boolean>(false);
   const [isBanned, setIsBanned] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
     uiManager.listen((playCutscene) => {
@@ -108,7 +121,7 @@ export const UI: React.FC<Props> = ({ scene }) => {
           setPlayCutscene(false);
 
           try {
-            await CommunityAPI.mint({
+            /* await CommunityAPI.mint({
               metadata: JSON.stringify({
                 quests: {
                   final: {
@@ -119,7 +132,7 @@ export const UI: React.FC<Props> = ({ scene }) => {
               wearables: {
                 TBA: 1,
               },
-            });
+            }); */
 
             notificationManager.notification({
               title: "Congratulations!",
@@ -172,6 +185,10 @@ export const UI: React.FC<Props> = ({ scene }) => {
       setIsBanned(true);
     });
 
+    uiManager.onLoading((loading) => {
+      setLoading(loading);
+    });
+
     const alreadyVisited =
       localStorage.getItem("valoria.alreadyVisited") === "true" ? true : false;
 
@@ -195,6 +212,7 @@ export const UI: React.FC<Props> = ({ scene }) => {
           }}
         />
       )}
+      {loading && <Loading />}
       {isBanned && <Banned />}
     </>
   );

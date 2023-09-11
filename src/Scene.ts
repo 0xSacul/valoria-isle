@@ -91,10 +91,6 @@ export default class ExternalScene extends window.BaseScene {
   create() {
     super.create();
 
-    window.openModal({
-      type: "loading",
-    });
-
     ReactDOM.render(
       React.createElement(UI, { scene: this }),
       document.getElementById("community-root")
@@ -116,27 +112,36 @@ export default class ExternalScene extends window.BaseScene {
 
   update() {
     super.update();
-    if (!isLoaded) this.input.keyboard.enabled = false;
+    if (!isLoaded)
+      (this.input.keyboard.enabled = false), uiManager.loading(true);
 
     //console.warn(this.currentPlayer.x + " " + this.currentPlayer.y);
 
-    if (!this.listener) {
-      this.listener = this.mmoService.state.context.server?.onMessage(
-        "*",
-        (message: any, data: any) => {
+    if (!this.playerDatalistener) {
+      this.playerDatalistener = this.mmoService.state.context.server?.onMessage(
+        "player_data",
+        (data: DatabaseData) => {
           if (!isLoaded) {
             isLoaded = true;
             this.input.keyboard.enabled = true;
             console.warn("[Valoria Isle] => Loaded");
-            console.warn(this.input);
-            window.closeModal();
+            uiManager.loading(false);
           }
 
-          if (message === "player_data") {
-            this.updateUserData(data);
-          } else if (message === "quest_hoodie") {
-            this.hoodieLeft = data.hoodieLeft as number | 0;
-          }
+          this.updateUserData(data);
+        }
+      );
+    }
+
+    if (!this.questListener) {
+      this.questListener = this.mmoService.state.context.server?.onMessage(
+        "quest_hoodie",
+        (data: { [key: string]: number }) => {
+          console.warn(
+            "[Valoria Isle] => Secret Left Updated:",
+            data.hoodieLeft
+          );
+          this.hoodieLeft = data.hoodieLeft as number | 0;
         }
       );
     }
@@ -146,6 +151,16 @@ export default class ExternalScene extends window.BaseScene {
         console.error("[Valoria Isle] => Lost connection to server");
         uiManager.lostConnection();
       });
+    }
+
+    if (!this.idkWhyIHaveToListenToThis) {
+      this.idkWhyIHaveToListenToThis =
+        this.mmoService.state.context.server?.onMessage(
+          "__playground_message_types",
+          (data: string[]) => {
+            console.warn("[Valoria Isle] => Playground Message Types:", data);
+          }
+        );
     }
   }
 

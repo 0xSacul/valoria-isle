@@ -118,7 +118,7 @@ export const QuestAerari: React.FC<Props> = ({ onClose, scene }) => {
                 {
                   label: "Blueberries",
                   value: 20,
-                  has: Number(playerInventory["Iron"] || 0) >= 20,
+                  has: Number(playerInventory["Blueberries"] || 0) >= 20,
                 },
               ],
               actions: [

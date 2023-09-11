@@ -10,6 +10,7 @@ import { QuestVeyari } from "../Quests/Season 1/Veyari";
 import { QuestPyrari } from "../Quests/Season 1/Pyrari";
 import { QuestSecretPath } from "../Quests/Season 1/SecretPath";
 import { QuestFinal } from "../Quests/Season 1/EndQuest";
+import { QuestAerari } from "../Quests/Season 1/Aerari";
 
 class QuestModalManager {
   private listener?: (npc: QuestNPCName, isOpen: boolean) => void;
@@ -72,6 +73,7 @@ export const QuestModal: React.FC<Props> = ({ scene }) => {
           <QuestSecretPath scene={scene} onClose={closeModal} />
         )}
         {npc === "Dee" && <QuestFinal scene={scene} onClose={closeModal} />}
+        {npc === "Ded" && <QuestAerari scene={scene} onClose={closeModal} />}
       </Modal>
     </>
   );
