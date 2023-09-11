@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { SpeakingModal } from "../../Components/SpeakingModal";
+import { notificationManager } from "../../Components/Notification";
 
 interface Props {
   onClose: () => void;
@@ -59,6 +60,11 @@ export const QuestSecretPath: React.FC<Props> = ({ onClose, scene }) => {
         <SpeakingModal
           trail={80}
           onClose={() => {
+            notificationManager.notification({
+              title: "Congratulations!",
+              description: "You've found the secret path!",
+              icon: "Success",
+            });
             onClose();
           }}
           onTextChange={(text) => {

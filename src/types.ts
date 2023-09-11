@@ -45,6 +45,7 @@ export type DatabaseData = {
   visitCount: number;
   wallet: string;
   farm: string;
+  canAccess: boolean;
   quests: {
     season_1: {
       sacul?: string;

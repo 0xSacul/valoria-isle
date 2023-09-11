@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { SpeakingModal } from "../../Components/SpeakingModal";
-import { CommunityAPI } from "../../Scene";
 
 interface Props {
   onClose: () => void;
@@ -13,7 +12,7 @@ export const QuestFinal: React.FC<Props> = ({ onClose, scene }) => {
   useEffect(() => {
     const player_quests = scene.currentPlayer.db_data.quests.season_1 || {};
 
-    /* if (player_quests.tiff !== "done") {
+    if (player_quests.tiff !== "done") {
       setStep(0.1);
       return;
     }
@@ -31,10 +30,7 @@ export const QuestFinal: React.FC<Props> = ({ onClose, scene }) => {
       player_quests.aerari === "done"
     ) {
       setCanCompleteQuest(true);
-    } */
-
-    setCanCompleteQuest(true);
-    setStep(2);
+    }
   }, []);
 
   return (

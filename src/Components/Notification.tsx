@@ -64,11 +64,11 @@ export const Notifications: React.FC<Props> = ({ scene }) => {
       {notification && (
         <InnerPanel className="fixed top-2 left-1/2 -translate-x-1/2 flex items-center z-50 ease-in-out p-2">
           {notification.icon && (
-            <img src={getIcon(notification.icon)} className="w-12 mr-1 ml-2" />
+            <img src={getIcon(notification.icon)} className="w-10 mr-1 ml-2" />
           )}
           <div className="flex flex-col">
-            <div className="text-lg font-bold">{notification.title}</div>
-            <div className="text-sm">{notification.description}</div>
+            <div className="text-sm font-bold">{notification.title}</div>
+            <div className="text-xxs">{notification.description}</div>
           </div>
         </InnerPanel>
       )}

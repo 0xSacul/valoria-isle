@@ -2,7 +2,7 @@ import React from "react";
 import { SpeakingModal } from "./SpeakingModal";
 
 type Props = {
-  scene: any;
+  scene?: any;
   onClose: () => void;
   message: string;
   actions?: {
@@ -11,12 +11,7 @@ type Props = {
   }[];
 };
 
-export const Dialogue: React.FC<Props> = ({
-  scene,
-  onClose,
-  message,
-  actions,
-}) => {
+export const Dialogue: React.FC<Props> = ({ onClose, message, actions }) => {
   return (
     <>
       {message && (

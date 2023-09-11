@@ -4,7 +4,6 @@ import Phaser from "phaser";
 
 import { UI, uiManager } from "./UI";
 import { Label } from "./Components/Label";
-import { notificationManager } from "./Components/Notification";
 import { CommunityModals, DatabaseData } from "./types";
 
 // Customs
@@ -17,7 +16,7 @@ const REPO_URL = "https://sacul.cloud/pd-preview/"; //"https://0xsacul.github.io
 
 // Community API
 export const CommunityAPI = new window.CommunityAPI({
-  id: "valoria-isle",
+  id: "valoria_isle",
   apiKey: "b96ee2b5-f1e9-41e2-a54a-9cbd6d624d48",
 });
 
@@ -28,23 +27,19 @@ export default class ExternalScene extends window.BaseScene {
     super({
       name: "local",
       map: {
-        tilesetUrl: REPO_URL + "tileset.png",
+        tilesetUrl: REPO_URL + "tileset.png" + `?v=${Date.now()}`,
       },
       player: {
         spawn: {
-          x: 583.5,
-          y: 140,
-          /* x: 780,
-          y: 400, */
-          /* x: 350,
-          y: 483, */
+          x: 567, // SPAWN
+          y: 770,
         },
       },
       mmo: {
         enabled: true,
-        url: "wss://plaza.sacul.cloud",
-        roomId: "project_dignity",
-        serverId: "project_dignity",
+        url: "ws://localhost:2567", //"wss://plaza.sacul.cloud",
+        roomId: "valoria",
+        serverId: "valoria",
       },
     });
   }
@@ -115,31 +110,33 @@ export default class ExternalScene extends window.BaseScene {
 
     const ambient = this.sound.add("ambient");
     ambient.setLoop(true);
-    ambient.setVolume(0.1);
+    ambient.setVolume(0.05);
     ambient.play();
-
-    setTimeout(() => {
-      notificationManager.notification({
-        title: "Congratulations!",
-        description: "You've achieved your first Quest!",
-        icon: "Success",
-      });
-    }, 2500);
   }
 
   update() {
     super.update();
-    //console.log(this.currentPlayer.x, this.currentPlayer.y);
+    if (!isLoaded) this.input.keyboard.enabled = false;
+
+    //console.warn(this.currentPlayer.x + " " + this.currentPlayer.y);
 
     if (!this.listener) {
       this.listener = this.mmoService.state.context.server?.onMessage(
-        "player_data",
-        (message: DatabaseData) => {
+        "*",
+        (message: any, data: any) => {
           if (!isLoaded) {
             isLoaded = true;
+            this.input.keyboard.enabled = true;
+            console.warn("[Valoria Isle] => Loaded");
+            console.warn(this.input);
             window.closeModal();
           }
-          this.updateUserData(message);
+
+          if (message === "player_data") {
+            this.updateUserData(data);
+          } else if (message === "quest_hoodie") {
+            this.hoodieLeft = data.hoodieLeft as number | 0;
+          }
         }
       );
     }
@@ -278,7 +275,14 @@ export default class ExternalScene extends window.BaseScene {
   }
 
   updateUserData(db_data: DatabaseData) {
+    if (!db_data) return;
     if (db_data.farmId !== this.mmoService.state.context.farmId) return;
+
+    if (db_data.canAccess === false) {
+      uiManager.isBanned();
+      return;
+    }
+
     const playerWardrobe = CommunityAPI.game.wardrobe;
 
     if (
@@ -296,22 +300,21 @@ export default class ExternalScene extends window.BaseScene {
   }
 
   sendQuestUpdate(season: string, quest: string, value: string) {
-    switch (season) {
-      case "season_1":
-        const current_quests = this.currentPlayer.db_data.quests;
+    if (season === "season_1") {
+      const current_quests = this.currentPlayer.db_data.quests;
 
-        if (current_quests[season][quest] === value) return;
+      if (current_quests[season][quest] === value) return;
 
-        current_quests[season][quest] = value;
+      current_quests[season][quest] = value;
 
-        this.mmoService.state.context.server?.send(
-          "quest_event",
-          current_quests
-        );
-        break;
-      default:
-        break;
+      this.mmoService.state.context.server?.send("quest_event", current_quests);
     }
+  }
+
+  updateRemainingHoodies(removeOne: boolean) {
+    return this.mmoService.state.context.server?.send("quest_hoodie", {
+      removeOne,
+    });
   }
 
   CheckPlayerDistance(x: number, y: number) {
@@ -322,10 +325,6 @@ export default class ExternalScene extends window.BaseScene {
       y
     );
     return player_distance > 40;
-  }
-
-  DiscoverIsland() {
-    console.log("Discovering island...");
   }
 
   PlaySound(sound_name: string, volume?: number) {
@@ -350,6 +349,7 @@ export default class ExternalScene extends window.BaseScene {
     });
   }
 
+  // Well umh this is a mess but it works - Need a rework later
   updateUserMapSettings(db_data: DatabaseData) {
     if (db_data.quests.season_1.final !== "done") {
       const end_quest_chest = this.children.getByName(
@@ -445,7 +445,6 @@ export default class ExternalScene extends window.BaseScene {
       "arcadian_mechanism_cloudObject"
     ) as Phaser.GameObjects.Sprite;
 
-    // Prevent Movements and Teleport Player on Cloud
     this.input.keyboard.enabled = false;
     this.currentPlayer.x = 780;
     this.currentPlayer.y = 370;

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Panel } from "../../Components/Panel";
 import { SpeakingModal } from "../../Components/SpeakingModal";
 import { CommunityAPI } from "../../Scene";
+import { notificationManager } from "../../Components/Notification";
 
 const REPO_URL = "https://sacul.cloud/pd-preview/"; //"https://0xsacul.github.io/valoria-isle/";
 
@@ -9,7 +10,7 @@ const NauticalGear = REPO_URL + "assets/components/NauticalGear.png";
 const ForestGem = REPO_URL + "assets/components/ForestGem.png";
 const Cog = REPO_URL + "assets/components/Cog.png";
 const MagicalRune = REPO_URL + "assets/components/MagicalRune.png";
-const ArcadianMechanism = REPO_URL + "assets/objects/ArcadianMechanism.png";
+const ArcadianMechanism = REPO_URL + "assets/objects/ArcadianMechanismIcon.png";
 
 interface Props {
   onClose: () => void;
@@ -42,9 +43,7 @@ export const QuestTiff: React.FC<Props> = ({ onClose, scene }) => {
       setCanBurn(true);
     }
 
-    // ---------
-
-    setStep(7);
+    // -----------------------------
     if (player_quests.lysari === "done") setHasNauticalGear(true);
     if (player_quests.veyari === "done") setHasForestGem(true);
     if (player_quests.pyrari === "done") setHasCog(true);
@@ -71,6 +70,7 @@ export const QuestTiff: React.FC<Props> = ({ onClose, scene }) => {
         },
       });
       scene.sendQuestUpdate("season_1", "tiff", "done");
+
       setStep(6.3);
     } catch (e) {
       console.error(e);
@@ -153,7 +153,7 @@ export const QuestTiff: React.FC<Props> = ({ onClose, scene }) => {
           }}
           message={[
             {
-              text: "Fantastic! Before we delve into the complexities of the island and its tribes, could you assist me in gathering some food for the other envoys? We need 100 carrots, 100 potatoes, and 30 cabbages.",
+              text: "Fantastic! Before we delve into the complexities of the island and its tribes, could you assist me in gathering some food for the other envoys? We need 100 carrots, 100 potatoes, and 30 cabbages. After that I'll introduce you to the other envoys.",
               actions: [
                 {
                   text: "Sure, I'll get right on it.",
@@ -277,6 +277,12 @@ export const QuestTiff: React.FC<Props> = ({ onClose, scene }) => {
         <SpeakingModal
           onClose={() => {
             onClose();
+            notificationManager.notification({
+              title: "Congratulations!",
+              description:
+                "You've completed the first quest! You can now access the other quests.",
+              icon: "Success",
+            });
           }}
           message={[
             {
@@ -498,7 +504,7 @@ export const QuestTiff: React.FC<Props> = ({ onClose, scene }) => {
                 }`}
               >
                 <div className="flex flex-col ml-2 text-left">
-                  <div className="text-lg">Cog</div>
+                  <div className="text-lg">Star Metal Cog</div>
                   <div className="text-xxs">
                     {hasCog ? "Acquired from Pyrari Tribe" : "Not yet acquired"}
                   </div>

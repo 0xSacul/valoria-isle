@@ -1,5 +1,4 @@
 import { questModalManager } from "../Components/QuestModal";
-import ExternalScene from "../Scene";
 
 export type CustomNPC = {
   id: string;
@@ -178,8 +177,8 @@ export const CustomNPCs: CustomNPC[] = [
 
   {
     id: "cloud",
-    x: 820,
-    y: 500,
+    x: 354,
+    y: 93,
     name: "Cloud",
     isAnimated: true,
     spritesheet: "assets/npc/Cloud.png",
@@ -195,8 +194,8 @@ export const CustomNPCs: CustomNPC[] = [
   },
   {
     id: "daan",
-    x: 840,
-    y: 500,
+    x: 824,
+    y: 241,
     name: "Daan",
     isAnimated: true,
     spritesheet: "assets/npc/Daan.png",
@@ -212,8 +211,8 @@ export const CustomNPCs: CustomNPC[] = [
   },
   {
     id: "godlevel",
-    x: 860,
-    y: 500,
+    x: 949,
+    y: 245,
     name: "Godlevel",
     isAnimated: true,
     spritesheet: "assets/npc/Godlevel.png",
@@ -229,8 +228,8 @@ export const CustomNPCs: CustomNPC[] = [
   },
   {
     id: "pedro",
-    x: 880,
-    y: 500,
+    x: 788,
+    y: 720,
     name: "Pedro",
     isAnimated: true,
     spritesheet: "assets/npc/Pedro.png",
@@ -244,13 +243,10 @@ export const CustomNPCs: CustomNPC[] = [
       height: 22,
     },
   },
-
-  // ===================== CUSTOM NPCS =====================
-
   {
     id: "granty",
-    x: 790,
-    y: 500,
+    x: 880,
+    y: 473,
     name: "GranTY",
     isAnimated: true,
     spritesheet: "assets/npc/Granty.png",
@@ -262,22 +258,6 @@ export const CustomNPCs: CustomNPC[] = [
       },
       width: 20,
       height: 19,
-    },
-    modal: {
-      type: "speaking",
-      messages: [
-        {
-          text: "Howdy farmer, I'm Tiffanydys but you can call me Tiff, I'm the Co-Founder of Project Dignity. Feel free to check us out!",
-          actions: [
-            {
-              text: "Visit Project Dignity",
-              cb: () => {
-                window.open("https://dignity-games.com/", "_blank");
-              },
-            },
-          ],
-        },
-      ],
     },
   },
   {
@@ -303,32 +283,15 @@ export const CustomNPCs: CustomNPC[] = [
           text: "Howdy unknown traveler, I'm Boden, welcome on our island!",
         },
         {
-          text: "I'm just a simple villager, if you need help you should talk to Tiff!",
-        },
-        {
-          text: "But since you seems friendly, I can show you around if you want! Our Island is pretty big and you can get lost easily!",
-          actions: [
-            {
-              text: "Sure! Show me around!",
-              cb: () => {
-                new ExternalScene().DiscoverIsland();
-              },
-            },
-            {
-              text: "No thanks, I'll find my own way.",
-              cb: () => {
-                window.closeModal();
-              },
-            },
-          ],
+          text: "I'm just a simple villager, but I think you should go talk to Tiff, so she can announce your arrival to the rest of the island!",
         },
       ],
     },
   },
   {
     id: "aeon",
-    x: 910,
-    y: 500,
+    x: 328,
+    y: 293,
     name: "Aeon",
     isAnimated: true,
     spritesheet: "assets/npc/Aeon.png",
@@ -340,22 +303,6 @@ export const CustomNPCs: CustomNPC[] = [
       },
       width: 20,
       height: 19,
-    },
-    modal: {
-      type: "speaking",
-      messages: [
-        {
-          text: "Howdy farmer, I'm Tiffanydys but you can call me Tiff, I'm the Co-Founder of Project Dignity. Feel free to check us out!",
-          actions: [
-            {
-              text: "Visit Project Dignity",
-              cb: () => {
-                window.open("https://dignity-games.com/", "_blank");
-              },
-            },
-          ],
-        },
-      ],
     },
   },
 ];

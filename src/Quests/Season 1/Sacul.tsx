@@ -12,11 +12,10 @@ export const QuestSacul: React.FC<Props> = ({ onClose, scene }) => {
   useEffect(() => {
     const player_quests = scene.currentPlayer.db_data.quests.season_1 || {};
 
+    if (player_quests.tiff !== "done") setStep(0.1);
+    if (scene.hoodieLeft <= 0) setStep(0.2);
     if (player_quests.sacul === "found") setStep(1);
-    if (player_quests.sacul === "onws") {
-      setStep(2);
-      scene.sendQuestUpdate("season_1", "sacul", "found");
-    }
+    if (player_quests.sacul === "owns") setStep(2);
   }, []);
 
   return (
@@ -40,6 +39,7 @@ export const QuestSacul: React.FC<Props> = ({ onClose, scene }) => {
                   text: "Accept what he's giving you",
                   cb: () => {
                     setStep(1);
+                    scene.updateRemainingHoodies(true);
                     scene.sendQuestUpdate("season_1", "sacul", "found");
                     notificationManager.notification({
                       title: "Congratulations!",
@@ -51,6 +51,36 @@ export const QuestSacul: React.FC<Props> = ({ onClose, scene }) => {
                   },
                 },
               ],
+            },
+          ]}
+        />
+      )}
+      {step === 0.1 && (
+        <SpeakingModal
+          onClose={() => {
+            onClose();
+          }}
+          message={[
+            {
+              text: "Greetings.. Wait who are you? Tiff usually tells me when we're expecting someone, maybe you should go talk to her first.",
+            },
+          ]}
+        />
+      )}
+      {step === 0.2 && (
+        <SpeakingModal
+          onClose={() => {
+            onClose();
+          }}
+          message={[
+            {
+              text: "Sssshhhhh! I'm hiding from the travelers!",
+            },
+            {
+              text: "... Ah crap, you're one of them aren't you?",
+            },
+            {
+              text: "Lots of you have been coming here lately, I'm not sure why. Unfortunately I don't have anything for you, but I'm sure you'll find something useful elsewhere.",
             },
           ]}
         />

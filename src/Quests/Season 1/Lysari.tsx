@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { SpeakingModal } from "../../Components/SpeakingModal";
 import { CommunityAPI } from "../../Scene";
+import { notificationManager } from "../../Components/Notification";
 
 interface Props {
   onClose: () => void;
@@ -170,6 +171,11 @@ export const QuestLysari: React.FC<Props> = ({ onClose, scene }) => {
       {step === 3 && (
         <SpeakingModal
           onClose={() => {
+            notificationManager.notification({
+              title: "Congratulations!",
+              description: "You've completed the Lysari Quest!",
+              icon: "Success",
+            });
             onClose();
           }}
           message={[
