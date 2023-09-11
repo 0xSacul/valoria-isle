@@ -191,6 +191,14 @@ export const CustomNPCs: CustomNPC[] = [
       width: 20,
       height: 19,
     },
+    modal: {
+      type: "speaking",
+      messages: [
+        {
+          text: "Hello, welcome to Veyari !",
+        },
+      ],
+    },
   },
   {
     id: "daan",
@@ -207,6 +215,14 @@ export const CustomNPCs: CustomNPC[] = [
       },
       width: 20,
       height: 22,
+    },
+    modal: {
+      type: "speaking",
+      messages: [
+        {
+          text: "Hello, welcome to Pyrari !",
+        },
+      ],
     },
   },
   {
@@ -225,6 +241,14 @@ export const CustomNPCs: CustomNPC[] = [
       width: 20,
       height: 22,
     },
+    modal: {
+      type: "speaking",
+      messages: [
+        {
+          text: "Hello, welcome to Pyrari !",
+        },
+      ],
+    },
   },
   {
     id: "pedro",
@@ -242,6 +266,14 @@ export const CustomNPCs: CustomNPC[] = [
       width: 20,
       height: 22,
     },
+    modal: {
+      type: "speaking",
+      messages: [
+        {
+          text: "Hello, welcome to Lysari !",
+        },
+      ],
+    },
   },
   {
     id: "granty",
@@ -258,6 +290,14 @@ export const CustomNPCs: CustomNPC[] = [
       },
       width: 20,
       height: 19,
+    },
+    modal: {
+      type: "speaking",
+      messages: [
+        {
+          text: "Hello, welcome to Lysari !",
+        },
+      ],
     },
   },
   {
@@ -303,6 +343,14 @@ export const CustomNPCs: CustomNPC[] = [
       },
       width: 20,
       height: 19,
+    },
+    modal: {
+      type: "speaking",
+      messages: [
+        {
+          text: "Hello, welcome to Veyari !",
+        },
+      ],
     },
   },
 ];

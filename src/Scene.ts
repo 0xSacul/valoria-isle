@@ -207,7 +207,7 @@ export default class ExternalScene extends window.BaseScene {
     if (npc.name) {
       const label = new Label(this as any, npc.name);
       this.add.existing(label);
-      label.setPosition(custom_npc.x, custom_npc.y - 12.5);
+      label.setPosition(custom_npc.x, custom_npc.y - 15);
       label.setDepth(1);
 
       const npcBox = this.add.rectangle(
