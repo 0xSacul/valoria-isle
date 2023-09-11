@@ -2,7 +2,8 @@ import React from "react";
 import ReactDOM from "react-dom";
 import Phaser from "phaser";
 
-import { UI, uiManager } from "./UI";
+import { UI } from "./UI";
+import { eventManager } from "./EventsManager";
 import { Label } from "./Components/Label";
 import { CommunityModals, DatabaseData } from "./types";
 
@@ -12,7 +13,7 @@ import { CustomObject, CustomObjects } from "./lib/objects";
 import { CustomAudio, CustomAudios } from "./lib/audio";
 
 // Repo URL
-const REPO_URL = "https://sacul.cloud/pd-preview/"; //"https://0xsacul.github.io/valoria-isle/";
+const REPO_URL = "https://0xsacul.github.io/valoria-isle/";
 
 // Community API
 export const CommunityAPI = new window.CommunityAPI({
@@ -37,7 +38,7 @@ export default class ExternalScene extends window.BaseScene {
       },
       mmo: {
         enabled: true,
-        url: "wss://plaza.sacul.cloud", //"ws://localhost:2567" ,
+        url: "wss://plaza.sacul.cloud",
         roomId: "valoria",
         serverId: "valoria",
       },
@@ -112,8 +113,7 @@ export default class ExternalScene extends window.BaseScene {
 
   update() {
     super.update();
-    if (!isLoaded)
-      (this.input.keyboard.enabled = false), uiManager.loading(true);
+    if (!isLoaded) this.input.keyboard.enabled = false;
 
     //console.warn(this.currentPlayer.x + " " + this.currentPlayer.y);
 
@@ -125,7 +125,8 @@ export default class ExternalScene extends window.BaseScene {
             isLoaded = true;
             this.input.keyboard.enabled = true;
             console.warn("[Valoria Isle] => Loaded");
-            uiManager.loading(false);
+            eventManager.emit("loading", false);
+            eventManager.emit("preventClose", false);
           }
 
           this.updateUserData(data);
@@ -149,7 +150,8 @@ export default class ExternalScene extends window.BaseScene {
     if (!this.leaveListener) {
       this.leaveListener = this.mmoService.state.context.server?.onLeave(() => {
         console.error("[Valoria Isle] => Lost connection to server");
-        uiManager.lostConnection();
+        eventManager.emit("lostConnection");
+        eventManager.emit("preventClose", true);
       });
     }
 
@@ -157,16 +159,7 @@ export default class ExternalScene extends window.BaseScene {
       this.idkWhyIHaveToListenToThis =
         this.mmoService.state.context.server?.onMessage(
           "__playground_message_types",
-          (data: string[]) => {
-            // Fuck off stupid listener
-            /*
-
-              For builders who read this, add this too on your island
-              or somehow you island won't connect to your server for
-              some reason
-
-            */
-          }
+          () => {}
         );
     }
   }
@@ -301,7 +294,8 @@ export default class ExternalScene extends window.BaseScene {
     if (db_data.farmId !== this.mmoService.state.context.farmId) return;
 
     if (db_data.canAccess === false) {
-      uiManager.isBanned();
+      eventManager.emit("banned");
+      eventManager.emit("preventClose", true);
       return;
     }
 
@@ -477,7 +471,10 @@ export default class ExternalScene extends window.BaseScene {
       arcadian_mechanism.setFrame(0);
       arcadian_mechanism.stop();
 
-      uiManager.dialogue("What is.. Oh my.. Travaler you're flying!");
+      eventManager.emit(
+        "dialogue",
+        "What is.. Oh my.. Traveler you're flying!"
+      );
 
       this.tweens.add({
         targets: [arcadian_mechanism_cloud],
@@ -486,7 +483,7 @@ export default class ExternalScene extends window.BaseScene {
         duration: 7500,
         ease: "Power3",
         onComplete: () => {
-          uiManager.dialogue("");
+          eventManager.emit("dialogue", "");
           this.input.keyboard.enabled = true;
 
           this.tweens.add({
@@ -513,7 +510,7 @@ export default class ExternalScene extends window.BaseScene {
   }
 
   sendPlayerToSpawn() {
-    uiManager.dialogue("");
+    eventManager.emit("dialogue", "");
     this.cameras.main.fadeOut(1000, 0, 0, 0);
     this.cameras.main.once(
       Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE,
@@ -526,6 +523,8 @@ export default class ExternalScene extends window.BaseScene {
       }
     );
   }
+
+  killBudsPopup() {}
 }
 
 window.ExternalScene = ExternalScene;

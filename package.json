@@ -6,7 +6,8 @@
     "build": "npm run clean && esbuild ./src/Scene.ts --bundle --minify --tsconfig=tsconfig.json --outfile=public/Scene.js",
     "dev": "npm run clean && esbuild ./src/Scene.ts --bundle --minify --watch --tsconfig=tsconfig.json --outfile=public/Scene.js",
     "clean": "rimraf public/Scene.js",
-    "lint": "eslint --ext .js,.jsx,.ts,.tsx ./src"
+    "lint": "eslint --ext .js,.jsx,.ts,.tsx ./src",
+    "tsc": "tsc --noEmit"
   },
   "dependencies": {
     "@types/node": "^20.5.9",

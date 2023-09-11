@@ -1,5 +1,5 @@
 import { questModalManager } from "../Components/QuestModal";
-import { uiManager } from "../UI";
+import { eventManager } from "../EventsManager";
 
 export type CustomObject = {
   id: string;
@@ -117,19 +117,19 @@ export const CustomObjects: CustomObject[] = [
           text: "Welcome on Valoria Island!",
         },
         {
-          text: "This is a community project, made by the community for the community.",
+          text: "This is a community project, made by Project Dignity, for the community!",
         },
         {
-          text: "Here at Project Dignity, we really wanted to create something that would be fun for everyone, and that would be a great way to introduce new players to the game.",
+          text: "Here at Project Dignity, we really wanted to create something that would be fun for everyone while also being a great way to introduce new players to the game!",
         },
         {
-          text: "The Island is a great place to start your adventure, and we hope you'll enjoy it! And don't forget to walk around and talk to people, you might find some interesting quests!",
+          text: "The Island is a great place to start your adventure, and we hope you'll enjoy it! Don't forget to walk around and talk to people, you might find some interesting quests!",
         },
         {
           text: "You'll also see that in our Island we keep some kind of roleplay, so don't take this sign as a part of our lore, it's just a way to introduce you to the Island!",
         },
         {
-          text: "Also, a huuuuge shoutout to the amazing team that worked on this project,",
+          text: "Last thing, a huuuuge shoutout to the amazing team that worked on this project,",
         },
         {
           text: "Sacul - Lead Developer & Project Manager, Ded - Game & Map Designer, Shykun - Animations & Art, Boden - Artist, Paluras - Artist",
@@ -347,7 +347,7 @@ export const CustomObjects: CustomObject[] = [
     noCollision: true,
     interactable: true,
     onClick: () => {
-      uiManager.playCutscene();
+      eventManager.emit("playCutscene", true);
     },
   },
   {
@@ -363,7 +363,7 @@ export const CustomObjects: CustomObject[] = [
     noCollision: true,
     interactable: true,
     onClick: () => {
-      uiManager.backToSpawn();
+      eventManager.emit("backToSpawn");
     },
   },
   {

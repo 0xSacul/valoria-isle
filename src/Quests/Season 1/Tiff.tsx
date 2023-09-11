@@ -4,7 +4,7 @@ import { SpeakingModal } from "../../Components/SpeakingModal";
 import { CommunityAPI } from "../../Scene";
 import { notificationManager } from "../../Components/Notification";
 
-const REPO_URL = "https://sacul.cloud/pd-preview/"; //"https://0xsacul.github.io/valoria-isle/";
+const REPO_URL = "https://0xsacul.github.io/valoria-isle/";
 
 const NauticalGear = REPO_URL + "assets/components/NauticalGear.png";
 const ForestGem = REPO_URL + "assets/components/ForestGem.png";

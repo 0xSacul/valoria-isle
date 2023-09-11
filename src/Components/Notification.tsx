@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { InnerPanel } from "./Panel";
 
-const REPO_URL = "https://sacul.cloud/pd-preview/"; //"https://0xsacul.github.io/valoria-isle/";
+const REPO_URL = "https://0xsacul.github.io/valoria-isle/";
 
 export type NotificationIcons = "ProjectDignityHoodie" | "Success";
 

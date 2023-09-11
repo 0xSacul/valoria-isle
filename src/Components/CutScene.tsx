@@ -1,6 +1,6 @@
 import React from "react";
 
-const REPO_URL = "https://sacul.cloud/pd-preview/"; //"https://0xsacul.github.io/valoria-isle/";
+const REPO_URL = "https://0xsacul.github.io/valoria-isle/";
 
 const VIDEO = REPO_URL + "assets/video/SpellCutscene.mp4";
 
