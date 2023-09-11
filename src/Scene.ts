@@ -109,6 +109,11 @@ export default class ExternalScene extends window.BaseScene {
     ambient.setLoop(true);
     ambient.setVolume(0.05);
     ambient.play();
+
+    const collision_box = this.add.rectangle(275, 500, 100, 100, 0x000000, 0);
+    collision_box.name = "secret_path_collision_box";
+    this.physics.add.existing(collision_box, true);
+    this.physics.add.collider(this.currentPlayer, collision_box);
   }
 
   update() {
@@ -380,12 +385,7 @@ export default class ExternalScene extends window.BaseScene {
       end_quest_chest.setFrame(0);
     }
 
-    if (!db_data.quests.season_1.secret_path) {
-      const collision_box = this.add.rectangle(275, 500, 100, 100, 0x000000, 0);
-      collision_box.name = "secret_path_collision_box";
-      this.physics.add.existing(collision_box, true);
-      this.physics.add.collider(this.currentPlayer, collision_box);
-    } else if (db_data.quests.season_1.secret_path === "found") {
+    if (db_data.quests.season_1.secret_path === "found") {
       const not_found_tree = this.children.getByName(
         "secret_path_tree_1Object"
       ) as Phaser.GameObjects.Sprite;
@@ -432,7 +432,7 @@ export default class ExternalScene extends window.BaseScene {
         const collision_box = this.children.getByName(
           "secret_path_collision_box"
         ) as Phaser.GameObjects.Rectangle;
-        collision_box.destroy();
+        if (collision_box) collision_box.destroy();
 
         this.sendQuestUpdate("season_1", "secret_path", "done");
       }, 15000);
@@ -467,6 +467,8 @@ export default class ExternalScene extends window.BaseScene {
 
     arcadian_mechanism.play("arcadian_mechanism_anim", true);
     arcadian_mechanism.once("animationcomplete", () => {
+      this.currentPlayer.x = 780;
+      this.currentPlayer.y = 370;
       arcadian_mechanism_cloud.setVisible(true);
       arcadian_mechanism.setFrame(0);
       arcadian_mechanism.stop();
