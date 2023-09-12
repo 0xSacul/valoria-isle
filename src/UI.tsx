@@ -34,6 +34,7 @@ export const UI: React.FC<Props> = ({ scene }) => {
     eventManager.on("banned", bannedListener);
     eventManager.on("loading", loadingListener);
     eventManager.on("preventClose", preventCloseListener);
+    eventManager.on("unmountUI", unmountUIListener);
   }, []);
 
   const playCutsceneListener = (playCutscene: boolean) => {
@@ -113,6 +114,10 @@ export const UI: React.FC<Props> = ({ scene }) => {
 
   const preventCloseListener = (preventClose: boolean) => {
     setPreventClose(preventClose);
+  };
+
+  const unmountUIListener = () => {
+    scene.unMountUI();
   };
 
   return (

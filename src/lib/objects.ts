@@ -72,6 +72,7 @@ export const CustomObjects: CustomObject[] = [
             {
               text: "Go Home",
               cb: () => {
+                eventManager.emit("unmountUI");
                 window.history.back();
               },
             },

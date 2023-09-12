@@ -116,6 +116,13 @@ export default class ExternalScene extends window.BaseScene {
     this.physics.add.collider(this.currentPlayer, collision_box);
   }
 
+  unMountUI() {
+    ReactDOM.render(
+      React.createElement("div", null, null),
+      document.getElementById("community-root")
+    );
+  }
+
   update() {
     super.update();
     if (!isLoaded) this.input.keyboard.enabled = false;

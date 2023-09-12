@@ -7,7 +7,8 @@ type EventNames =
   | "backToSpawn"
   | "lostConnection"
   | "playCutscene"
-  | "preventClose";
+  | "preventClose"
+  | "unmountUI";
 
 class EventManager {
   private listeners: { [eventName: string]: EventHandler[] } = {};
