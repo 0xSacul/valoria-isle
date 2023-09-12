@@ -29,7 +29,7 @@ export const QuestVeyari: React.FC<Props> = ({ onClose, scene }) => {
     if (player_quests.veyari === "done") setStep(3.1);
 
     const kale = Number(playerInventory["Kale"] || 0);
-    const mushrooms = Number(playerInventory["Mushroom"] || 0);
+    const mushrooms = Number(playerInventory["Wild Mushroom"] || 0);
 
     if (kale >= 30 && mushrooms >= 5) {
       setCanBurn(true);
@@ -51,7 +51,7 @@ export const QuestVeyari: React.FC<Props> = ({ onClose, scene }) => {
         }),
         items: {
           Kale: 30,
-          Mushroom: 5,
+          "Wild Mushroom": 5,
         },
       });
       scene.sendQuestUpdate("season_1", "veyari", "done");
@@ -130,7 +130,7 @@ export const QuestVeyari: React.FC<Props> = ({ onClose, scene }) => {
                 {
                   label: "Mushroom",
                   value: 5,
-                  has: Number(playerInventory["Mushroom"] || 0) >= 5,
+                  has: Number(playerInventory["Wild Mushroom"] || 0) >= 5,
                 },
               ],
               actions: [
