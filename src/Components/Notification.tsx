@@ -3,7 +3,10 @@ import { InnerPanel } from "./Panel";
 
 const REPO_URL = "https://0xsacul.github.io/valoria-isle/";
 
-export type NotificationIcons = "ProjectDignityHoodie" | "Success";
+export type NotificationIcons =
+  | "ProjectDignityHoodie"
+  | "Success"
+  | "ValoriaWreath";
 
 type Notification = {
   icon?: NotificationIcons;
@@ -56,6 +59,8 @@ export const Notifications: React.FC<Props> = ({ scene }) => {
         return REPO_URL + "assets/icons/ProjectDignityHoodie.png";
       case "Success":
         return REPO_URL + "assets/icons/Success.gif";
+      case "ValoriaWreath":
+        return REPO_URL + "assets/icons/ValoriaWreath.png";
     }
   };
 

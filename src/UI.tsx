@@ -72,8 +72,8 @@ export const UI: React.FC<Props> = ({ scene }) => {
           notificationManager.notification({
             title: "Congratulations!",
             description:
-              "You've achieved the final quest and got a Valoria Wreath!",
-            icon: "Success",
+              "You've earned an exclusive Valoria Wreath for your Bumpkin!",
+            icon: "ValoriaWreath",
           });
           const floating_arrow = scene.children.getByName(
             "end_quest_cart_arrowObject"
