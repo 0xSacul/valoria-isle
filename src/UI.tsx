@@ -35,6 +35,15 @@ export const UI: React.FC<Props> = ({ scene }) => {
     eventManager.on("loading", loadingListener);
     eventManager.on("preventClose", preventCloseListener);
     eventManager.on("unmountUI", unmountUIListener);
+
+    const hasCompletedIntroduction = localStorage.getItem(
+      "valoria.introduction"
+    );
+
+    if (!hasCompletedIntroduction) {
+      setShowIntroduction(true);
+      JSON.stringify(localStorage.setItem("valoria.introduction", "true"));
+    }
   }, []);
 
   const playCutsceneListener = (playCutscene: boolean) => {
