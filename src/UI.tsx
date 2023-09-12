@@ -82,7 +82,7 @@ export const UI: React.FC<Props> = ({ scene }) => {
           floating_arrow.anims.play("end_quest_cart_arrow_anim", true);
 
           setDialogueMessage(
-            "You.. YOU DID IT TRAVELER! You've united the tribes and completed the mechanism! I can't believe it, I've been waiting for this moment for so long. I can't thank you enough, but at least I can help you to get down of there, jump in the cart!"
+            "You.. YOU DID IT TRAVELER! You've united the tribes and completed the mechanism! I can't believe it, I've been waiting for this moment for so long. I can't thank you enough, but at least I can help you to get down of there, jump in the cart! And don't forget to take your Valoria Wreath with you!"
           );
 
           scene.sendQuestUpdate("season_1", "final", "done");
