@@ -131,7 +131,6 @@ export default class ExternalScene extends window.BaseScene {
             this.input.keyboard.enabled = true;
             console.warn("[Valoria Isle] => Loaded");
             eventManager.emit("loading", false);
-            eventManager.emit("preventClose", false);
           }
 
           this.updateUserData(data);
@@ -152,7 +151,6 @@ export default class ExternalScene extends window.BaseScene {
       this.leaveListener = this.mmoService.state.context.server?.onLeave(() => {
         console.error("[Valoria Isle] => Lost connection to server");
         eventManager.emit("lostConnection");
-        eventManager.emit("preventClose", true);
       });
     }
 
@@ -296,7 +294,6 @@ export default class ExternalScene extends window.BaseScene {
 
     if (db_data.canAccess === false) {
       eventManager.emit("banned");
-      eventManager.emit("preventClose", true);
       return;
     }
 

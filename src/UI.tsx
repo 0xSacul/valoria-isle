@@ -121,12 +121,13 @@ export const UI: React.FC<Props> = ({ scene }) => {
       <Notifications scene={scene} />
       <Dialogue scene={scene} message={dialogueMessage} onClose={() => {}} />
       {playCutscene && <CutScene />}
+
+      {/* Toggleable backdrop modal */}
       <Modal
         show={showIntroduction || isBanned || isLoading || lostConnection}
         centered
         backdrop={preventClose ? "static" : true}
       >
-        {lostConnection && <LostConnection />}
         {showIntroduction && (
           <IsleIntroduction
             onClose={() => {
@@ -134,6 +135,15 @@ export const UI: React.FC<Props> = ({ scene }) => {
             }}
           />
         )}
+      </Modal>
+
+      {/* Static backdrop modal */}
+      <Modal
+        show={isBanned || isLoading || lostConnection}
+        centered
+        backdrop="static"
+      >
+        {lostConnection && <LostConnection />}
         {isLoading && <Loading />}
         {isBanned && <Banned />}
       </Modal>
