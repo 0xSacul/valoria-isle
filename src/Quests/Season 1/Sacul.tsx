@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { SpeakingModal } from "../../Components/SpeakingModal";
 import { notificationManager } from "../../Components/Notification";
+import { questModalManager } from "../../Components/QuestModal";
+import { CommunityAPI } from "../../Scene";
+import { on } from "events";
 
 interface Props {
   onClose: () => void;
@@ -13,10 +16,41 @@ export const QuestSacul: React.FC<Props> = ({ onClose, scene }) => {
     const player_quests = scene.currentPlayer.db_data.quests.season_1 || {};
 
     if (player_quests.tiff !== "done") setStep(0.1);
-    if (scene.hoodieLeft <= 0) setStep(0.2);
+    if (scene.hoodieLeft <= 0) setStep(0.4);
     if (player_quests.sacul === "found") setStep(1);
     if (player_quests.sacul === "owns") setStep(2);
   }, []);
+
+  const handleQuestComplete = async () => {
+    setStep(0.2);
+
+    try {
+      questModalManager.preventClose(true);
+
+      await CommunityAPI.mint({
+        metadata: JSON.stringify({
+          quests: {
+            sacul: {
+              done_at: Date.now(),
+            },
+          },
+        }),
+        wearables: {
+          "Project Dignity Hoodie": 1,
+        },
+      });
+      scene.sendQuestUpdate("season_1", "sacul", "done");
+      notificationManager.notification({
+        title: "Congratulations!",
+        description: "You've found an exclusive Project Dignity hoodie!",
+        icon: "ProjectDignityHoodie",
+      });
+      onClose();
+    } catch (e) {
+      console.error(e);
+      setStep(0.3);
+    }
+  };
 
   return (
     <>
@@ -37,18 +71,7 @@ export const QuestSacul: React.FC<Props> = ({ onClose, scene }) => {
               actions: [
                 {
                   text: "Accept what he's giving you",
-                  cb: () => {
-                    setStep(1);
-                    scene.updateRemainingHoodies(true);
-                    scene.sendQuestUpdate("season_1", "sacul", "found");
-                    notificationManager.notification({
-                      title: "Congratulations!",
-                      description:
-                        "You've found an exclusive Project Dignity hoodie!",
-                      icon: "ProjectDignityHoodie",
-                    });
-                    onClose();
-                  },
+                  cb: () => handleQuestComplete(),
                 },
               ],
             },
@@ -68,6 +91,30 @@ export const QuestSacul: React.FC<Props> = ({ onClose, scene }) => {
         />
       )}
       {step === 0.2 && (
+        <SpeakingModal
+          onClose={() => {
+            onClose();
+          }}
+          message={[
+            {
+              text: "Here's a hoodie for you! Let me just get it out of my bag...",
+            },
+          ]}
+        />
+      )}
+      {step === 0.3 && (
+        <SpeakingModal
+          onClose={() => {
+            onClose();
+          }}
+          message={[
+            {
+              text: "Ah... I didn't manage to get it out of my bag. I'm not sure why, you might want to try again later.",
+            },
+          ]}
+        />
+      )}
+      {step === 0.4 && (
         <SpeakingModal
           onClose={() => {
             onClose();

@@ -12,9 +12,9 @@ export const QuestSecretPath: React.FC<Props> = ({ onClose, scene }) => {
   useEffect(() => {
     const player_quests = scene.currentPlayer.db_data.quests.season_1 || {};
 
-    /* if (player_quests.tiff !== "done") {
+    if (player_quests.tiff !== "done") {
       return onClose();
-    } */
+    }
 
     if (
       player_quests.secret_path === "found" ||
