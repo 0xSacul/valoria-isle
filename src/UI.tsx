@@ -71,7 +71,8 @@ export const UI: React.FC<Props> = ({ scene }) => {
 
           notificationManager.notification({
             title: "Congratulations!",
-            description: "You've achieved the final quest!",
+            description:
+              "You've achieved the final quest and got a Valoria Wreath!",
             icon: "Success",
           });
           const floating_arrow = scene.children.getByName(
