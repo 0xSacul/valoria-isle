@@ -10,7 +10,6 @@ export const QuestFinal: React.FC<Props> = ({ onClose, scene }) => {
   const [canCompleteQuest, setCanCompleteQuest] = useState<boolean>(false);
 
   useEffect(() => {
-    questModalManager.preventClose(false);
     const player_quests = scene.currentPlayer.db_data.quests.season_1 || {};
 
     if (player_quests.tiff !== "done") {
