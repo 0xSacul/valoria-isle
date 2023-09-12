@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { SpeakingModal } from "../../Components/SpeakingModal";
 import { CommunityAPI } from "../../Scene";
 import { notificationManager } from "../../Components/Notification";
+import { questModalManager } from "../../Components/QuestModal";
 
 interface Props {
   onClose: () => void;
@@ -14,6 +15,7 @@ export const QuestPyrari: React.FC<Props> = ({ onClose, scene }) => {
   const playerInventory = CommunityAPI.game.inventory;
 
   useEffect(() => {
+    questModalManager.preventClose(false);
     const player_quests = scene.currentPlayer.db_data.quests.season_1 || {};
 
     if (player_quests.tiff !== "done") {
@@ -36,6 +38,7 @@ export const QuestPyrari: React.FC<Props> = ({ onClose, scene }) => {
     setStep(2.1);
 
     try {
+      questModalManager.preventClose(true);
       await CommunityAPI.burn({
         metadata: JSON.stringify({
           quests: {

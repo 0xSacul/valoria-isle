@@ -14,10 +14,10 @@ import { QuestAerari } from "../Quests/Season 1/Aerari";
 
 class QuestModalManager {
   private listener?: (npc: QuestNPCName, isOpen: boolean) => void;
-  public preventClose: boolean = false;
+  private preventCloseListener?: (value: boolean) => void;
 
   public open(npc: QuestNPCName) {
-    if (!this.preventClose && this.listener) {
+    if (this.listener) {
       this.listener(npc, true);
     }
   }
@@ -26,8 +26,14 @@ class QuestModalManager {
     this.listener = cb;
   }
 
-  public setPreventClose(value: boolean) {
-    this.preventClose = value;
+  public preventClose(value: boolean) {
+    if (this.preventCloseListener) {
+      this.preventCloseListener(value);
+    }
+  }
+
+  public listenPreventClose(cb: (value: boolean) => void) {
+    this.preventCloseListener = cb;
   }
 }
 
@@ -39,14 +45,16 @@ type Props = {
 
 export const QuestModal: React.FC<Props> = ({ scene }) => {
   const [npc, setNpc] = useState<QuestNPCName>();
-  const [preventClose, setPreventClose] = useState<boolean>(
-    questModalManager.preventClose
-  );
+  const [preventClose, setPreventClose] = useState<boolean>(false);
 
   useEffect(() => {
     questModalManager.listen((npc) => {
+      setPreventClose(false);
       setNpc(npc);
-      setPreventClose(questModalManager.preventClose);
+    });
+
+    questModalManager.listenPreventClose((value) => {
+      setPreventClose(value);
     });
   }, []);
 

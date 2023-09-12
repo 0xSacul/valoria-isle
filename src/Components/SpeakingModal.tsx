@@ -25,7 +25,6 @@ interface Props {
   onTextChange?: (text: string) => void;
   className?: string;
   message: Message[];
-  preventClose?: boolean;
   trail?: number;
   hideContinue?: boolean;
 }
@@ -39,7 +38,6 @@ export const SpeakingModal: React.FC<Props> = ({
   onTextChange,
   className,
   message,
-  preventClose,
   trail,
   hideContinue,
 }) => {
@@ -91,14 +89,6 @@ export const SpeakingModal: React.FC<Props> = ({
       onTextChange(message[currentMessage].text);
     }
   }, [currentMessage, message, onTextChange]);
-
-  useEffect(() => {
-    if (preventClose && !questModalManager.preventClose) {
-      questModalManager.setPreventClose(true);
-    } else if (!preventClose && questModalManager.preventClose) {
-      questModalManager.setPreventClose(false);
-    }
-  }, [preventClose]);
 
   const maxLength = Math.max(...message.map((m) => m.text.length));
   let lines = maxLength / 30;

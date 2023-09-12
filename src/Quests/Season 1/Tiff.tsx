@@ -3,6 +3,7 @@ import { Panel } from "../../Components/Panel";
 import { SpeakingModal } from "../../Components/SpeakingModal";
 import { CommunityAPI } from "../../Scene";
 import { notificationManager } from "../../Components/Notification";
+import { questModalManager } from "../../Components/QuestModal";
 
 const REPO_URL = "https://0xsacul.github.io/valoria-isle/";
 
@@ -30,6 +31,7 @@ export const QuestTiff: React.FC<Props> = ({ onClose, scene }) => {
   const playerInventory = CommunityAPI.game.inventory;
 
   useEffect(() => {
+    questModalManager.preventClose(false);
     const player_quests = scene.currentPlayer.db_data.quests.season_1 || {};
 
     if (player_quests.tiff === "waiting") setStep(6);
@@ -55,6 +57,8 @@ export const QuestTiff: React.FC<Props> = ({ onClose, scene }) => {
     setStep(6.1);
 
     try {
+      questModalManager.preventClose(true);
+
       await CommunityAPI.burn({
         metadata: JSON.stringify({
           quests: {
@@ -70,7 +74,6 @@ export const QuestTiff: React.FC<Props> = ({ onClose, scene }) => {
         },
       });
       scene.sendQuestUpdate("season_1", "tiff", "done");
-
       setStep(6.3);
     } catch (e) {
       console.error(e);
@@ -250,7 +253,6 @@ export const QuestTiff: React.FC<Props> = ({ onClose, scene }) => {
       )}
       {step === 6.1 && (
         <SpeakingModal
-          preventClose
           onClose={() => {
             onClose();
           }}
