@@ -26,7 +26,8 @@ let isLoaded = false;
 export default class ExternalScene extends window.BaseScene {
   constructor() {
     super({
-      name: "valoria_isle",
+      name: "volaria_isle",
+      // name: "local",
       map: {
         tilesetUrl: REPO_URL + "tileset.png" + `?v=${Date.now()}`,
       },
@@ -39,6 +40,7 @@ export default class ExternalScene extends window.BaseScene {
       mmo: {
         enabled: true,
         url: "wss://plaza.sacul.cloud",
+        //url: "ws://localhost:2567",
         roomId: "valoria",
         serverId: "valoria",
       },

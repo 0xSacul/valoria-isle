@@ -194,8 +194,8 @@ export const CustomObjects: CustomObject[] = [
   },
   {
     id: "secret_path_red_mushroom",
-    x: 330,
-    y: 485,
+    x: 315,
+    y: 447.5,
     spritesheet: "assets/objects/SmallRedMushroom.png",
     isAnimated: false,
     sheet: {

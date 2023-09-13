@@ -81,7 +81,7 @@ export const QuestLysari: React.FC<Props> = ({ onClose, scene }) => {
           }}
           message={[
             {
-              text: "Greetings, envoy. Lysari ships are in dire need of repair. Could you collect 50 pieces of wood and 20 pieces of iron for us? In return, we'll give you a Nautical Gear component for the Arcadian Mechanism.",
+              text: "Greetings, envoy. Lysari ships are in dire need of repair. Could you collect 50 pieces of wood and 3 pieces of iron for us? In return, we'll give you a Nautical Gear component for the Arcadian Mechanism.",
               actions: [
                 {
                   text: "Sure, I'll get right on it.",
