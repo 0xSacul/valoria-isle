@@ -8,7 +8,8 @@ type EventNames =
   | "lostConnection"
   | "playCutscene"
   | "preventClose"
-  | "unmountUI";
+  | "unmountUI"
+  | "showQuestsTracker";
 
 class EventManager {
   private listeners: { [eventName: string]: EventHandler[] } = {};

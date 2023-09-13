@@ -3,7 +3,6 @@ import { SpeakingModal } from "../../Components/SpeakingModal";
 import { notificationManager } from "../../Components/Notification";
 import { questModalManager } from "../../Components/QuestModal";
 import { CommunityAPI } from "../../Scene";
-import { on } from "events";
 
 interface Props {
   onClose: () => void;

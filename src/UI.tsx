@@ -11,6 +11,7 @@ import { Dialogue } from "./Components/Dialogue";
 import { IsleIntroduction } from "./Components/IsleIntroduction";
 import { Banned } from "./Components/Banned";
 import { Loading } from "./Components/Loading";
+import { QuestsTracker } from "./Components/QuestsTracker";
 
 type Props = {
   scene: any;
@@ -23,7 +24,7 @@ export const UI: React.FC<Props> = ({ scene }) => {
   const [showIntroduction, setShowIntroduction] = useState<boolean>(false);
   const [isBanned, setIsBanned] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [preventClose, setPreventClose] = useState<boolean>(true);
+  const [showQuestsTracker, setShowQuestsTracker] = useState<boolean>(false);
 
   useEffect(() => {
     // Register listeners
@@ -33,8 +34,10 @@ export const UI: React.FC<Props> = ({ scene }) => {
     eventManager.on("dialogue", dialogueListener);
     eventManager.on("banned", bannedListener);
     eventManager.on("loading", loadingListener);
-    eventManager.on("preventClose", preventCloseListener);
     eventManager.on("unmountUI", unmountUIListener);
+    eventManager.on("showQuestsTracker", () => {
+      setShowQuestsTracker(true);
+    });
 
     const hasCompletedIntroduction = localStorage.getItem(
       "valoria.introduction"
@@ -122,10 +125,6 @@ export const UI: React.FC<Props> = ({ scene }) => {
     setIsLoading(loading);
   };
 
-  const preventCloseListener = (preventClose: boolean) => {
-    setPreventClose(preventClose);
-  };
-
   const unmountUIListener = () => {
     scene.unMountUI();
   };
@@ -137,12 +136,25 @@ export const UI: React.FC<Props> = ({ scene }) => {
       <Dialogue scene={scene} message={dialogueMessage} onClose={() => {}} />
       {playCutscene && <CutScene />}
 
-      {/* Toggleable backdrop modal */}
+      {showQuestsTracker && (
+        <QuestsTracker
+          scene={scene}
+          onClose={() => {
+            setShowQuestsTracker(false);
+          }}
+          show={showQuestsTracker}
+        />
+      )}
+
+      {/* Static backdrop modal */}
       <Modal
-        show={showIntroduction || isBanned || isLoading || lostConnection}
+        show={isBanned || isLoading || lostConnection || showIntroduction}
         centered
-        backdrop={preventClose ? "static" : true}
+        backdrop="static"
       >
+        {lostConnection && <LostConnection />}
+        {isLoading && <Loading />}
+        {isBanned && <Banned />}
         {showIntroduction && (
           <IsleIntroduction
             onClose={() => {
@@ -150,17 +162,6 @@ export const UI: React.FC<Props> = ({ scene }) => {
             }}
           />
         )}
-      </Modal>
-
-      {/* Static backdrop modal */}
-      <Modal
-        show={isBanned || isLoading || lostConnection}
-        centered
-        backdrop="static"
-      >
-        {lostConnection && <LostConnection />}
-        {isLoading && <Loading />}
-        {isBanned && <Banned />}
       </Modal>
     </>
   );

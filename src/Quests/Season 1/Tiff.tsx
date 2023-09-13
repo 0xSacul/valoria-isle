@@ -1,17 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { Panel } from "../../Components/Panel";
 import { SpeakingModal } from "../../Components/SpeakingModal";
 import { CommunityAPI } from "../../Scene";
 import { notificationManager } from "../../Components/Notification";
 import { questModalManager } from "../../Components/QuestModal";
-
-const REPO_URL = "https://0xsacul.github.io/valoria-isle/";
-
-const NauticalGear = REPO_URL + "assets/components/NauticalGear.png";
-const ForestGem = REPO_URL + "assets/components/ForestGem.png";
-const Cog = REPO_URL + "assets/components/Cog.png";
-const MagicalRune = REPO_URL + "assets/components/MagicalRune.png";
-const ArcadianMechanism = REPO_URL + "assets/objects/ArcadianMechanismIcon.png";
+import { eventManager } from "../../EventsManager";
 
 interface Props {
   onClose: () => void;
@@ -20,13 +12,6 @@ interface Props {
 export const QuestTiff: React.FC<Props> = ({ onClose, scene }) => {
   const [step, setStep] = useState<number>(0);
   const [canBurn, setCanBurn] = useState<boolean>(false);
-
-  const [hasCog, setHasCog] = useState<boolean>(false);
-  const [hasForestGem, setHasForestGem] = useState<boolean>(false);
-  const [hasNauticalGear, setHasNauticalGear] = useState<boolean>(false);
-  const [hasMagicalRune, setHasMagicalRune] = useState<boolean>(false);
-  const [hasArcadianMechanism, setHasArcadianMechanism] =
-    useState<boolean>(false);
 
   const playerInventory = CommunityAPI.game.inventory;
 
@@ -44,13 +29,6 @@ export const QuestTiff: React.FC<Props> = ({ onClose, scene }) => {
     if (carrots >= 100 && potatoes >= 100 && cabbages >= 30) {
       setCanBurn(true);
     }
-
-    // -----------------------------
-    if (player_quests.lysari === "done") setHasNauticalGear(true);
-    if (player_quests.veyari === "done") setHasForestGem(true);
-    if (player_quests.pyrari === "done") setHasCog(true);
-    if (player_quests.aerari === "done") setHasMagicalRune(true);
-    if (player_quests.final === "done") setHasArcadianMechanism(true);
   }, []);
 
   const handleQuestComplete = async () => {
@@ -308,7 +286,9 @@ export const QuestTiff: React.FC<Props> = ({ onClose, scene }) => {
                 },
                 {
                   text: "Show me my progress.",
-                  cb: () => setStep(9),
+                  cb: () => {
+                    eventManager.emit("showQuestsTracker"), onClose();
+                  },
                 },
               ],
             },
@@ -453,107 +433,6 @@ export const QuestTiff: React.FC<Props> = ({ onClose, scene }) => {
             },
           ]}
         />
-      )}
-      {step === 9 && (
-        <Panel>
-          <div className="flex flex-col items-center justify-center text-center">
-            <h1 className="text-xl">Quest Progress</h1>
-            <span className="text-xxs mb-2">
-              You have completed the following quests:
-            </span>
-            <div className="flex flex-col items-center justify-center w-full mt-4 mb-2 gap-2">
-              <div
-                className={`flex flex-row items-center justify-between w-full ${
-                  hasNauticalGear ? "" : "opacity-50"
-                }`}
-              >
-                <div className="flex flex-col ml-2 text-left">
-                  <div className="text-lg">Nautical Gear</div>
-                  <div className="text-xxs">
-                    {hasNauticalGear
-                      ? "Acquired from Lysari Tribe"
-                      : "Not yet acquired"}
-                  </div>
-                </div>
-                <img
-                  src={NauticalGear}
-                  alt="Nautical Gear"
-                  className="w-12 mr-1 ml-2"
-                />
-              </div>
-              <div
-                className={`flex flex-row items-center justify-between w-full ${
-                  hasForestGem ? "" : "opacity-50"
-                }`}
-              >
-                <div className="flex flex-col ml-2 text-left">
-                  <div className="text-lg">Forest Gem</div>
-                  <div className="text-xxs">
-                    {hasForestGem
-                      ? "Acquired from Veyari Tribe"
-                      : "Not yet acquired"}
-                  </div>
-                </div>
-                <img
-                  src={ForestGem}
-                  alt="Forest Gem"
-                  className="w-12 mr-1 ml-2"
-                />
-              </div>
-              <div
-                className={`flex flex-row items-center justify-between w-full ${
-                  hasCog ? "" : "opacity-50"
-                }`}
-              >
-                <div className="flex flex-col ml-2 text-left">
-                  <div className="text-lg">Star Metal Cog</div>
-                  <div className="text-xxs">
-                    {hasCog ? "Acquired from Pyrari Tribe" : "Not yet acquired"}
-                  </div>
-                </div>
-                <img src={Cog} alt="Cog" className="w-12 mr-1 ml-2" />
-              </div>
-              <div
-                className={`flex flex-row items-center justify-between w-full ${
-                  hasMagicalRune ? "" : "opacity-50"
-                }`}
-              >
-                <div className="flex flex-col ml-2 text-left">
-                  <div className="text-lg">Magical Rune</div>
-                  <div className="text-xxs">
-                    {hasMagicalRune
-                      ? "Acquired from Aerari Tribe"
-                      : "Not yet acquired"}
-                  </div>
-                </div>
-                <img
-                  src={MagicalRune}
-                  alt="Magical Rune"
-                  className="w-12 mr-1 ml-2"
-                />
-              </div>
-              <div
-                className={`flex flex-row items-center justify-between w-full ${
-                  hasArcadianMechanism ? "" : "opacity-50"
-                }`}
-              >
-                <div className="flex flex-col ml-2 text-left">
-                  <div className="text-lg">Arcadian Mechanism</div>
-                  <div className="text-xxs">
-                    {hasArcadianMechanism
-                      ? "Mechanism Completed"
-                      : "Not yet completed"}
-                  </div>
-                </div>
-                <img
-                  src={ArcadianMechanism}
-                  alt="Arcadian Mechanism"
-                  className="w-12 mr-1 ml-2"
-                />
-              </div>
-            </div>
-          </div>
-        </Panel>
       )}
     </>
   );

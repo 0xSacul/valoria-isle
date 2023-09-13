@@ -5,8 +5,6 @@ import classNames from "classnames";
 import { TypingMessage } from "./TypingMessage";
 import { Button } from "./Button";
 
-import { questModalManager } from "./QuestModal";
-
 export type Message = {
   text: string;
   jsx?: JSX.Element;

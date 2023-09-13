@@ -26,8 +26,8 @@ let isLoaded = false;
 export default class ExternalScene extends window.BaseScene {
   constructor() {
     super({
-      name: "volaria_isle",
-      // name: "local",
+      name: "valoria_isle",
+      //name: "local",
       map: {
         tilesetUrl: REPO_URL + "tileset.png" + `?v=${Date.now()}`,
       },
