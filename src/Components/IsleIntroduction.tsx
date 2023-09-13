@@ -53,7 +53,8 @@ export const IsleIntroduction: React.FC<Props> = ({ onClose }) => {
               <img src={Heart} className="h-6" />
             </div>
             <p className="text-sm flex-1">
-              We recommend you to turn your music on for the best experience.
+              We recommend you to turn your music on and play on a computer for
+              the best experience.
             </p>
           </div>
           <div className="flex items-center mb-1">
