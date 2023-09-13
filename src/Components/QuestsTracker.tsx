@@ -139,7 +139,7 @@ export const QuestsTracker: React.FC<Props> = ({ scene, onClose, show }) => {
                   <div className="text-xxs">
                     {hasNauticalGear
                       ? "Acquired from Lysari Tribe"
-                      : "Not yet acquired"}
+                      : "Acquire from Lysari Tribe"}
                   </div>
                 </div>
                 <img
@@ -158,7 +158,7 @@ export const QuestsTracker: React.FC<Props> = ({ scene, onClose, show }) => {
                   <div className="text-xxs">
                     {hasForestGem
                       ? "Acquired from Veyari Tribe"
-                      : "Not yet acquired"}
+                      : "Acquire from Veyari Tribe"}
                   </div>
                 </div>
                 <img
@@ -175,7 +175,9 @@ export const QuestsTracker: React.FC<Props> = ({ scene, onClose, show }) => {
                 <div className="flex flex-col ml-2 text-left">
                   <div className="text-lg">Star Metal Cog</div>
                   <div className="text-xxs">
-                    {hasCog ? "Acquired from Pyrari Tribe" : "Not yet acquired"}
+                    {hasCog
+                      ? "Acquired from Pyrari Tribe"
+                      : "Acquire from Pyrari Tribe"}
                   </div>
                 </div>
                 <img src={Cog} alt="Cog" className="w-12 mr-1 ml-2" />
@@ -190,7 +192,7 @@ export const QuestsTracker: React.FC<Props> = ({ scene, onClose, show }) => {
                   <div className="text-xxs">
                     {hasMagicalRune
                       ? "Acquired from Aerari Tribe"
-                      : "Not yet acquired"}
+                      : "Acquire from Aerari Tribe"}
                   </div>
                 </div>
                 <img
@@ -209,7 +211,7 @@ export const QuestsTracker: React.FC<Props> = ({ scene, onClose, show }) => {
                   <div className="text-xxs">
                     {hasArcadianMechanism
                       ? "Mechanism Completed"
-                      : "Not yet completed"}
+                      : "Complete Arcadian Mechanism"}
                   </div>
                 </div>
                 <img
