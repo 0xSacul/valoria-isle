@@ -325,6 +325,9 @@ export const CustomNPCs: CustomNPC[] = [
         {
           text: "I'm just a simple villager, but I think you should go talk to Tiff, so she can announce your arrival to the rest of the island!",
         },
+        {
+          text: "She's in the village, just follow the path to the north!",
+        },
       ],
     },
   },

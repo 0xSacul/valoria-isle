@@ -11,6 +11,7 @@ const Cog = REPO_URL + "assets/components/Cog.png";
 const MagicalRune = REPO_URL + "assets/components/MagicalRune.png";
 const ArcadianMechanism = REPO_URL + "assets/objects/ArcadianMechanismIcon.png";
 const ValoriaWreath = REPO_URL + "assets/icons/ValoriaWreath.png";
+const ValoriaWreathMannequin = REPO_URL + "assets/sfts/ValoriaWreath.png";
 const ArrowRight = REPO_URL + "assets/icons/ArrowRight.png";
 const QuestionIcon = REPO_URL + "assets/icons/Question.png";
 
@@ -124,11 +125,21 @@ export const QuestsTracker: React.FC<Props> = ({ scene, onClose, show }) => {
           )}
           {selected === 1 && (
             <div className="flex flex-col items-center justify-center w-full gap-2">
-              <h1 className="text-xl">Valoria Wreath</h1>
-              <span className="text-xxs mb-2 text-center">
-                Can you help the tribes of Valoria? Complete all quests to earn
-                this exclusive Valoria Wreath for your Bumpkin!
-              </span>
+              <h1 className="text-xl mb-1">Valoria Wreath Quest</h1>
+              <div className="flex flex-row items-start justify-center w-full">
+                <img
+                  src={ValoriaWreathMannequin}
+                  alt="Valoria Wreath"
+                  className="m-2 rounded-lg"
+                />
+                <div>
+                  <h1 className="text-xl">Valoria Wreath</h1>
+                  <span className="text-xxs text-center">
+                    Can you help the tribes of Valoria? Complete all quests to
+                    earn this exclusive Valoria Wreath for your Bumpkin!
+                  </span>
+                </div>
+              </div>
               <div
                 className={`flex flex-row items-center justify-between w-full mt-2 ${
                   hasNauticalGear ? "" : "opacity-50"
