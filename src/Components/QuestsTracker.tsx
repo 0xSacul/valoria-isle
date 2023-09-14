@@ -18,10 +18,9 @@ const QuestionIcon = REPO_URL + "assets/icons/Question.png";
 interface Props {
   scene: any;
   onClose: () => void;
-  show: boolean;
 }
 
-export const QuestsTracker: React.FC<Props> = ({ scene, onClose, show }) => {
+export const QuestsTracker: React.FC<Props> = ({ scene, onClose }) => {
   const [selected, setSelected] = useState<number>(0);
 
   const [hasCog, setHasCog] = useState<boolean>(false);
@@ -45,7 +44,7 @@ export const QuestsTracker: React.FC<Props> = ({ scene, onClose, show }) => {
 
   return (
     <>
-      <Modal show={show} centered>
+      <Modal show={true} centered>
         <Panel>
           {selected === 0 && (
             <div className="flex flex-col items-center justify-center text-center">

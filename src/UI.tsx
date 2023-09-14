@@ -136,13 +136,14 @@ export const UI: React.FC<Props> = ({ scene }) => {
       <Dialogue scene={scene} message={dialogueMessage} onClose={() => {}} />
       {playCutscene && <CutScene />}
 
-      <QuestsTracker
-        scene={scene}
-        onClose={() => {
-          setShowQuestsTracker(false);
-        }}
-        show={showQuestsTracker}
-      />
+      {showQuestsTracker && (
+        <QuestsTracker
+          scene={scene}
+          onClose={() => {
+            setShowQuestsTracker(false);
+          }}
+        />
+      )}
 
       {/* Static backdrop modal */}
       <Modal
